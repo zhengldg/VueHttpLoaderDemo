@@ -1,0 +1,155 @@
+﻿@section style{
+}
+    <div class="con-left">
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">空气质量目标</b>
+                <ul class="date-chg">
+                    <li ng-class="{'on':airYearType==1}" ng-click="airYearType=1">2018年全市目标</li>
+                    <li ng-class="{'on':airYearType==2}" ng-click="airYearType=2">2020年全市目标</li>
+                </ul>
+            </div>
+            <div class="block-bd">
+                <div class="poly" ng-if="airYearType==1">
+                    <h4>PM2.5</h4>
+                    <p class="detail-info">PM2.5目标浓度  <b style="color: #4cc3ff;">达到27ug/m3</b></p>
+                    <p class="detail-info">截止至今PM2.5评价浓度  <b><label ng-bind="AirQuantity.Tab1AvgOfPM25"></label> ug/m3</b> <i class="icon-confirm"></i></p>
+                </div>
+                <div class="poly" ng-if="airYearType==1">
+                    <h4>AQI</h4>
+                    <p class="detail-info">优良天数目标比例  <b style="color: #4cc3ff;">达到95.6%</b></p>
+                    <p class="detail-info">截止至今优良天数比例  <b><label ng-bind="AirQuantity.Tab1PencentOfFine"></label>%</b> <i ng-class="{'icon-warnning':AirQuantity.Tab1PencentOfFine < 80,'icon-confirm':AirQuantity.Tab1PencentOfFine >= 80 }"></i></p>
+                </div>
+
+                <div class="poly" ng-if="airYearType==2">
+                    <h4>PM2.5</h4>
+                    <p class="detail-info">PM2.5目标浓度  <b style="color: #4cc3ff;">达到22ug/m3</b></p>
+                    <p class="detail-info">截止至今PM2.5评价浓度  <b><label ng-bind="AirQuantity.Tab1AvgOfPM25"></label> ug/m3</b> <i class="icon-confirm"></i></p>
+                </div>
+                <div class="poly" ng-if="airYearType==2">
+                    <h4>AQI</h4>
+                    <p class="detail-info">优良天数目标比例  <b style="color: #4cc3ff;">达到98.6%</b></p>
+                    <p class="detail-info">截止至今优良天数比例  <b><label ng-bind="AirQuantity.Tab1PencentOfFine"></label>%</b><i ng-class="{'icon-warnning':AirQuantity.Tab1PencentOfFine < 80,'icon-confirm':AirQuantity.Tab1PencentOfFine >= 80 }"></i></p>
+                </div>
+            </div>
+        </div>
+        <div class="gap" style="height: 30px;"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">全市空气质量变化趋势</b>
+            </div>
+            <div class="block-bd">
+                <p class="detail-info">本月PM2.5平均浓度为  <b><label ng-bind="AirQuantity.MonthAvgOfPM25"></label> μg/m³</b>，优良率  <b><label ng-bind="AirQuantity.PencentOfFine"></label> %（<label ng-bind="AirQuantity.DaysOfFine"></label>天）</b></p>
+                <div id="airTrendChart" style="width:479px; height:225px;"></div>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">清新空气情况</b>
+            </div>
+            <div class="block-bd">
+                <div class="wrap-1">
+                    <p>基本站  <b ng-bind-template="{{qxkq.Zdtj.JB}}个"></b>  功能站  <b ng-bind-template="{{qxkq.Zdtj.GN}}个"></b></p>
+                    <p>实时空气清新等级<em ng-bind="qxkq.Zxpjsj.PJDJDM"></em> <em ng-bind="qxkq.Zxpjsj.PJDMMC"></em>&nbsp;&nbsp;&nbsp;评价时间：<label ng-bind="qxkq.Zxpjsj.PJSJ|formatTime:'MM-dd HH时'"></label></p>
+                </div>
+                <ul class="ul-1">
+                    <li>
+                        <img src="~/Resources/Skins/default/images/icon_fy1.png" alt="">
+                        <p>负氧离子（个/cm3）</p>
+                        <span style="background-color: #3ad09d;" ng-bind="qxkq.Zxjcsj.FYLZ"></span>
+                    </li>
+                    <li>
+                        <img src="~/Resources/Skins/default/images/icon_fy2.png" alt="">
+                        <p>PM2.5（ug/m3）</p>
+                        <span style="background-color: #ffb066;" ng-bind="qxkq.Zxjcsj.PM25"></span>
+                    </li>
+                    <li>
+                        <img src="~/Resources/Skins/default/images/icon_fy3.png" alt="">
+                        <p>O3（ug/m3）</p>
+                        <span style="background-color: #75b1ff;" ng-bind="qxkq.Zxjcsj.O3"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="con-right">
+        <div class="block">
+            <div class="block-hd">
+                <b class="kq-rank on">空气质量排名</b>
+            </div>
+            <div class="block-bd">
+                <div class="tab-panel">
+                    <span ng-if="rankingType==1">本年丽水空气质量全省排名  <b ng-bind-template="第{{airRanking.lishuiProvince.QNPM}}"></b></span>
+                    <span ng-if="rankingType==2">本年丽水空气质量全国排名  <b ng-bind-template="第{{airRanking.lishuiNational.QNPM}}"></b></span>
+                    <ul class="ul-2">
+                        <li ng-class="{on:rankingType==1}" ng-click="rankingType=1">全省排名(<label ng-bind-template="{{airRanking.lishuiProvince.PMND}}-{{airRanking.lishuiProvince.PMSJ}}"></label>)</li>
+                        <li ng-class="{on:rankingType==2}" ng-click="rankingType=2">全国排名(<label ng-bind-template="{{airRanking.lishuiNational.PMND}}-{{airRanking.lishuiNational.PMSJ}}"></label>)</li>
+                    </ul>
+                </div>
+                <table class="table-1">
+                    <thead>
+                        <tr>
+                            <td>行政区划</td>
+                            @*<td>AQI</td>*@
+                            <td>全年排名</td>
+                            <td>本月排名</td>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="rankingType==1">
+                        <tr ng-repeat="item in airRanking.provinceAirRankingData">
+                            <td ng-bind="item.CDMC"></td>
+                            @*<td ng-bind="item.YZZ"></td>*@
+                            <td ng-bind="item.QNPM">@*<img src="~/Resources/Skins/default/images/icon_g1.png" alt="">*@</td>
+                            <td ng-bind="item.DYPM"></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="rankingType==2">
+                        <tr ng-repeat="item in airRanking.nationalAirRankingData">
+                            <td ng-bind="item.CDMC"></td>
+                            @*<td ng-bind="item.YZZ"></td>*@
+                            <td ng-bind="item.QNPM">@*<img src="~/Resources/Skins/default/images/icon_g1.png" alt="">*@</td>
+                            <td ng-bind="item.DYPM"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">涉气污染源监测</b>
+            </div>
+            <div class="block-bd">
+                <div id="SqwryjcChart" style="width:480px; height:171px;">
+                </div>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">涉气重点工程</b>
+            </div>
+            <div class="block-bd">
+                <div class="chart-wrap">
+                    <div id="zdgcChart1" style="width:266px;height:110px;float:left;"></div>
+                    <div id="zdgcChart2" style="width:159px;height:130px;float:left;margin-left:20px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section script
+    {
+    <script src="~/App/page/bluesky/index.js"></script>
+
+    <script>
+        function ifLoaded() {
+            console.log(document.getElementById("iframe").contentWindow);
+            setTimeout(function () {
+                document.getElementById("iframe").contentWindow.ChangeModel('Air');
+            }, 1000)
+        }
+    </script>
+}
+

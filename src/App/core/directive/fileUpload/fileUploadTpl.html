@@ -1,0 +1,31 @@
+﻿<div class="layui-upload  dw-table">
+    <div class="layui-upload-list">
+        <table class="layui-table">
+            <colgroup>
+                <col style="width:50%" />
+                <col style="width:25%" />
+                <col style="width:25%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>文件名称 </th>
+                    <th>文件大小</th>
+                    <th>
+                        <span ng-if="editflag==0">操作</span>
+                        <button ng-show="editflag==1" type="button" class="layui-btn layui-btn-sm layui-btn-normal" id="{{btnId}}">选择文件</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in fileList">
+                    <td style="text-align:left !important; padding-left:10px !important; " ng-bind="item.FJMC"></td>
+                    <td ng-bind="item.FJDX|fmtFilesize"></td>
+                    <td>
+                        <a class="layui-btn layui-btn-primary layui-btn-xs" href="{{downloadUrl}}/{{item.XH}}">下载</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" ng-show="editflag" ng-click="delete(item.XH)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> 

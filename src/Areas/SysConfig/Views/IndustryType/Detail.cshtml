@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/Views/Shared/_ViewLayout.cshtml";
+}
+
+@model PowerData.DataCenter.Model.Comn.Hylx.T_COMN_HYLX
+
+<table width="100%" style="text-align: left; table-layout: fixed" class="list_table">
+    <col width="20%" />
+    <col width="30%" />
+    <col width="20%" />
+    <col width="30%" />
+    <tr style="height: 30px">
+        <td align="right">hylxdm行业类型代码：</td>
+        <td colspan="3"> @Model.HYLXDM</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">hylx行业类型：</td>
+        <td colspan="3"> @Model.HYLX</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">sortcode排序码：</td>
+        <td colspan="3"> @Model.PXM</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">hyml行业门类：</td>
+        <td colspan="3"> @Model.HYML</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">hyjb行业级别：</td>
+        <td colspan="3"> @Model.HYJB</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">dmxz代码性质：</td>
+        <td colspan="3"> @Model.DMXZ</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">行业代码性质：</td>
+        <td colspan="3"> @Model.HYDMXZ</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">xmsp_xm_desc行业描述：</td>
+        <td colspan="3"> @Model.HYMS</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">zd_hylx重点行业分类：</td>
+        <td colspan="3"> @Model.ZDHYFL</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">zd_hylxmc重点行业名称：</td>
+        <td colspan="3"> @Model.ZDHYMC</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">组织代码：</td>
+        <td colspan="3"> @Model.ORGID</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">创建时间：</td>
+        <td colspan="3"> @TypeConverts.TimeFormat(Model.CJSJ)</td>
+    </tr>
+    <tr style="height: 30px">
+        <td align="right">PID：</td>
+        <td colspan="3"> @Model.PID</td>
+    </tr>
+</table>
+
+

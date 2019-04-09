@@ -1,0 +1,116 @@
+﻿@{
+    var id = ViewContext.RouteData.Values["id"];
+    int editFlag = ViewBag.editFlag;
+}
+
+<div  class="pd010 layui-form @(editFlag == 0 ? "pdb10" : "pdb55")" ng-controller="indexCtrl as vm" ng-cloak>
+    <div class="grid-infor">
+        <table @(editFlag == 0 ? "form-readonly" : "")>
+            <tr>
+                <td>
+                    <span class="red">*</span>行政区划代码
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.XZQHDM" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>行政区划名称
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.XZQH" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>简称
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.JC" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    父代码
+                </td>
+                <td>
+                    <dropdown-list id="FDM" url='@(Url.Action("GetRegionalismCodeDropDownList"))' textField="name" valueField="id" ng-model="vm.entity.FDM"></dropdown-list>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    行政级别
+                </td>
+                <td>
+                    <dropdown-list ng-disabled="true" id="XZJB" url="@(Url.Action("GetGgdmz","Tool",new { area="", DMJBH = "XZJB" }))" textField="text" valueField="id" ng-model="vm.entity.XZJB"></dropdown-list>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>是否有效
+                </td>
+                <td>
+                    <radio-list id="SFYX" ng-disabled="true" lay-verify="radio" url="@(Url.Action("GetGgdmz","Tool",new { area="", DMJBH = "SFYX" }))" textField="text" valueField="id" ng-model="vm.entity.SFYX"></radio-list>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>排序号
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.PXM" lay-verify="required|number" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+        </table>
+    </div>
+    @if (editFlag == 1)
+    {
+        <div class="foot-btnp">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-filter="form1" lay-submit>保存</button>
+            <button class="layui-btn   layui-btn-sm layui-btn-primary" onclick="parent.layer.closeAll()">取消</button>
+        </div>
+    }
+</div>
+
+@section script{
+    <script>
+        var id = '@id';
+
+        angular.module("app.ydyd")
+            .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", function ($scope, pdActionSvr, pdResourceSvr) {
+                var addOrEditUrl = '@Url.Action("AddOrEditPost")';
+
+                var vm = this;
+                vm.entity = { };
+                vm.save = function () {
+                    pdResourceSvr.post(addOrEditUrl, vm.entity)
+                        .then(function (rsp) {
+                            if (rsp.Result) {
+                                pdActionSvr.success('保存成功', '提示');
+                                vm.isEdit = true;
+                            } else {
+                                pdActionSvr.error(rsp.message || '保存失败');
+                            }
+                        });
+                }
+
+                vm.init = function () {
+                    if (id) {
+                        vm.isEdit = true;
+                        pdResourceSvr.get('@Url.Action("Get")?id=' + id)
+                            .then(function (rsp) {
+                                vm.entity = rsp || {};
+                            });
+                    }
+                }
+
+                vm.init();
+
+                //监听提交
+                layui.form.on('submit(form1)', function (data) {
+                    vm.save();
+                });
+            }]);
+    </script>
+}

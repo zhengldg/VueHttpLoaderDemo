@@ -1,0 +1,1285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5B374AEA-F963-414E-AA33-5AA5F5809F30}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Boanda.DSJPT.HZ.EntryWeb</RootNamespace>
+    <AssemblyName>Boanda.DSJPT.HZ.EntryWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Words">
+      <HintPath>..\Lib\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac, Version=4.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extras.DynamicProxy, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Autofac.Extras.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Boanda.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Boanda.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.Mvc.Site">
+      <HintPath>..\Lib\Boanda.Mvc.Site.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.SystemConfiguration.Core">
+      <HintPath>..\Lib\Boanda.SystemConfiguration.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.SystemConfiguration.IService">
+      <HintPath>..\Lib\Boanda.SystemConfiguration.IService.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.SystemConfiguration.Repository">
+      <HintPath>..\Lib\Boanda.SystemConfiguration.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.SystemConfiguration.Service">
+      <HintPath>..\Lib\Boanda.SystemConfiguration.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Boanda.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Boanda.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetCasClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetCasClient.1.1.0\lib\net45\DotNetCasClient.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.Core, Version=1.6.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.6.20\lib\net45\Hangfire.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.SQLite, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SQLite.1.4.2\lib\net45\Hangfire.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer, Version=1.6.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SqlServer.1.6.20\lib\net45\Hangfire.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler, Version=3.2.0.157, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniProfiler.3.2.0.157\lib\net40\MiniProfiler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MiniProfiler.Mvc, Version=3.0.11.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniProfiler.MVC4.3.0.11\lib\net40\MiniProfiler.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PowerData.Common, Version=3.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\PowerData.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerData.Data, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\PowerData.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerData.Platform, Version=3.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\PowerData.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.109.1\lib\net451\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App\app.js" />
+    <Content Include="App\common.js" />
+    <Content Include="App\core\directive\cascade\pdCascade.js" />
+    <Content Include="App\core\directive\checkboxList\pdCheckboxList.js" />
+    <Content Include="App\core\directive\cityPicker\cityPicker.js" />
+    <Content Include="App\core\directive\cityPicker\fileUploadTpl.html" />
+    <Content Include="App\core\directive\datepicker\pdDatepicker.js" />
+    <Content Include="App\core\directive\dropdownList\pdDropdownList.js" />
+    <Content Include="App\core\directive\dropdownTree\pdDropdownTree.js" />
+    <Content Include="App\core\directive\fileUpload\fileUpload.js" />
+    <Content Include="App\core\directive\fileUpload\fileUploadTpl.html" />
+    <Content Include="App\core\directive\formReadonly\formReadonly.js" />
+    <Content Include="App\core\directive\multiFileUpload\fileUploadTpl.html" />
+    <Content Include="App\core\directive\multiFileUpload\multiFileUpload.js" />
+    <Content Include="App\core\directive\radioList\pdRadioList.js" />
+    <Content Include="App\core\filter\pdCheckboxFilter.js" />
+    <Content Include="App\core\service\pd.action.js" />
+    <Content Include="App\core\service\pd.resource.js" />
+    <Content Include="App\core\service\pd.table.js" />
+    <Content Include="App\filter\app.filter.js" />
+    <Content Include="App\filter\app.filter.sjzx.js" />
+    <Content Include="App\home\home.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Resources\Components\angularjs\1.7.5\angular-route.js" />
+    <Content Include="Resources\Components\angularjs\1.7.5\angular.js" />
+    <Content Include="Resources\Components\angularjs\angular-route.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-ui-router.min.js" />
+    <Content Include="Resources\Components\echarts\echarts.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.1-animate.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.1-cookies.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.1-sanitize.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.1.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.9-animate.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.9-cookies.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.9-sanitize.min.js" />
+    <Content Include="Resources\Components\angularjs\angular-1.2.9.min.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_en.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-cn.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hans-cn.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hans-hk.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hans-mo.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hans-sg.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hans.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hant-hk.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hant-mo.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hant-tw.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hant.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-hk.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh-tw.js" />
+    <Content Include="Resources\Components\angularjs\i18n\angular-locale_zh.js" />
+    <Content Include="Resources\Components\awesomefont\font-awesome.min.css" />
+    <Content Include="Resources\Components\echarts\echarts-all-3.js" />
+    <Content Include="Resources\Components\echarts\echarts-liquidfill.js" />
+    <Content Include="Resources\Components\echarts\echarts.js" />
+    <Content Include="Resources\Components\flipclock\flipclock.css" />
+    <Content Include="Resources\Components\flipclock\flipclock.js" />
+    <Content Include="Resources\Components\hint\hint.css" />
+    <Content Include="Resources\Components\hizoom\hizoom.js" />
+    <Content Include="Resources\Components\iealert\iealert.js" />
+    <Content Include="Resources\Components\iealert\iealert\bg.png" />
+    <Content Include="Resources\Components\iealert\iealert\iealertsprite.png" />
+    <Content Include="Resources\Components\iealert\iealert\sg.jpg" />
+    <Content Include="Resources\Components\jquery-blockui\jquery.blockui.min.js" />
+    <Content Include="Resources\Components\jquery\html5shiv.min.js" />
+    <Content Include="Resources\Components\jquery\jquery-ui-1.11.4.min.js" />
+    <Content Include="Resources\Components\layui\css\login.css" />
+    <Content Include="Resources\Components\layui\images\checkbox.png" />
+    <Content Include="Resources\Components\layui\images\checkbox_t.png" />
+    <Content Include="Resources\Components\layui\images\filetype\aac.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ace.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ai.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ain.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\amr.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\app.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\arj.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\asf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\asp.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\aspx.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\av.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\avi.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\bin.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\bmp.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\cab.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\cad.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\cat.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\cdr.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\chm.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\com.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\css.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\cur.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dat.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\db.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dll.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dmv.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\doc.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\docx.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dot.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dps.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dpt.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dwg.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\dxf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\emf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\eps.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\et.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ett.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\exe.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\fla.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ftp.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\gif.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\hlp.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\htm.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\html.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\icl.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ico.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\img.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\inf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ini.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\iso.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\jpeg.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\jpg.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\js.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\m3u.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\max.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mdb.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mde.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mht.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mid.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\midi.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mov.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mp3.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mp4.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mpeg.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\mpg.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\msi.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\nrg.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ocx.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ogg.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ogm.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\pdf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\png.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\pot.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ppt.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\pptx.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\psd.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\pub.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\qt.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ra.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\ram.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\rar.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\rm.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\rmvb.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\rtf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\swf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\tar.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\tif.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\tiff.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\txt.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\unknown.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\url.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\vbs.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\vsd.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\vss.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\vst.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wav.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wave.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wm.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wma.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wmd.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wmf.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wmv.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wps.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\wpt.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\xls.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\xlsx.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\xlt.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\xml.gif" />
+    <Content Include="Resources\Components\layui\images\filetype\zip.gif" />
+    <Content Include="Resources\Components\layui\images\help_light.png" />
+    <Content Include="Resources\Components\layui\images\icon_arrowDown.png" />
+    <Content Include="Resources\Components\layui\images\icon_arrowUp.png" />
+    <Content Include="Resources\Components\layui\images\icon_b_bf.png" />
+    <Content Include="Resources\Components\layui\images\icon_drop_d.png" />
+    <Content Include="Resources\Components\layui\images\icon_drop_u.png" />
+    <Content Include="Resources\Components\layui\images\icon_exit_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_NEW.png" />
+    <Content Include="Resources\Components\layui\images\icon_ok.png" />
+    <Content Include="Resources\Components\layui\images\icon_ok_yet.png" />
+    <Content Include="Resources\Components\layui\images\icon_panel_bf.png" />
+    <Content Include="Resources\Components\layui\images\icon_position.png" />
+    <Content Include="Resources\Components\layui\images\icon_qiye_logo.png" />
+    <Content Include="Resources\Components\layui\images\icon_search.png" />
+    <Content Include="Resources\Components\layui\images\icon_user.png" />
+    <Content Include="Resources\Components\layui\images\icon_user_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_zy.png" />
+    <Content Include="Resources\Components\layui\images\ic_clear.png" />
+    <Content Include="Resources\Components\layui\images\ic_dzh.png" />
+    <Content Include="Resources\Components\layui\images\ic_far.png" />
+    <Content Include="Resources\Components\layui\images\ic_fnl.png" />
+    <Content Include="Resources\Components\layui\images\ic_srh.png" />
+    <Content Include="Resources\Components\layui\images\img_erm.png" />
+    <Content Include="Resources\Components\layui\images\img_yzm.png" />
+    <Content Include="Resources\Components\layui\images\input_txt_pw.png" />
+    <Content Include="Resources\Components\layui\images\input_txt_user.png" />
+    <Content Include="Resources\Components\layui\images\item_add.png" />
+    <Content Include="Resources\Components\layui\images\item_ic1.png" />
+    <Content Include="Resources\Components\layui\images\item_ic10.png" />
+    <Content Include="Resources\Components\layui\images\item_ic2.png" />
+    <Content Include="Resources\Components\layui\images\item_ic3.png" />
+    <Content Include="Resources\Components\layui\images\item_ic4.png" />
+    <Content Include="Resources\Components\layui\images\item_ic5.png" />
+    <Content Include="Resources\Components\layui\images\item_ic6.png" />
+    <Content Include="Resources\Components\layui\images\item_ic7.png" />
+    <Content Include="Resources\Components\layui\images\item_ic8.png" />
+    <Content Include="Resources\Components\layui\images\item_ic9.png" />
+    <Content Include="Resources\Components\layui\images\lock.png" />
+    <Content Include="Resources\Components\layui\images\login_bg-1.jpg" />
+    <Content Include="Resources\Components\layui\images\login_bg-2.jpg" />
+    <Content Include="Resources\Components\layui\images\login_bg.jpg" />
+    <Content Include="Resources\Components\layui\images\login_btn_new.png" />
+    <Content Include="Resources\Components\layui\images\login_font.png" />
+    <Content Include="Resources\Components\layui\images\login_icon_yzm.png" />
+    <Content Include="Resources\Components\layui\images\login_logo1.png" />
+    <Content Include="Resources\Components\layui\images\login_shadow.png" />
+    <Content Include="Resources\Components\layui\images\logo.png" />
+    <Content Include="Resources\Components\layui\images\log_bot_line.png" />
+    <Content Include="Resources\Components\layui\images\log_box_bg.png" />
+    <Content Include="Resources\Components\layui\images\log_box_bg1.png" />
+    <Content Include="Resources\Components\layui\images\next.png" />
+    <Content Include="Resources\Components\layui\images\next_on.png" />
+    <Content Include="Resources\Components\layui\images\prev.png" />
+    <Content Include="Resources\Components\layui\images\prev_on.png" />
+    <Content Include="Resources\Components\layui\images\q_1.png" />
+    <Content Include="Resources\Components\layui\images\q_11.png" />
+    <Content Include="Resources\Components\layui\images\q_2.png" />
+    <Content Include="Resources\Components\layui\images\q_22.png" />
+    <Content Include="Resources\Components\layui\images\q_3.png" />
+    <Content Include="Resources\Components\layui\images\q_33.png" />
+    <Content Include="Resources\Components\layui\images\q_4.png" />
+    <Content Include="Resources\Components\layui\images\q_44.png" />
+    <Content Include="Resources\Components\layui\images\q_5.png" />
+    <Content Include="Resources\Components\layui\images\q_55.png" />
+    <Content Include="Resources\Components\layui\images\q_6.png" />
+    <Content Include="Resources\Components\layui\images\q_66.png" />
+    <Content Include="Resources\Components\layui\images\tip_help.png" />
+    <Content Include="Resources\Components\layui\images\tit_ico.png" />
+    <Content Include="Resources\Components\layui\images\top_hjjc.png" />
+    <Content Include="Resources\Components\layui\images\top_hjjc_2.png" />
+    <Content Include="Resources\Components\layui\images\top_hjyw.png" />
+    <Content Include="Resources\Components\layui\images\top_hjyw_2.png" />
+    <Content Include="Resources\Components\layui\images\top_sjgl.png" />
+    <Content Include="Resources\Components\layui\images\top_sjgl_2.png" />
+    <Content Include="Resources\Components\layui\images\top_wryjc.png" />
+    <Content Include="Resources\Components\layui\images\top_wryjc_2.png" />
+    <Content Include="Resources\Components\layui\images\top_xtgl.png" />
+    <Content Include="Resources\Components\layui\images\top_xtgl_2.png" />
+    <Content Include="Resources\Components\layui\images\top_ycyd.png" />
+    <Content Include="Resources\Components\layui\images\top_ycyd_2.png" />
+    <Content Include="Resources\Components\layui\layui.all.min.js" />
+    <Content Include="Resources\Components\layui\script\jquery-1.11.1.min.js" />
+    <Content Include="Resources\Components\map\MarkerClusterer.js" />
+    <Content Include="Resources\Components\map\MarkerClusterer.min.js" />
+    <Content Include="Resources\Components\map\TextIconOverlay.js" />
+    <Content Include="Resources\Components\map\TextIconOverlay.min.js" />
+    <Content Include="Resources\Components\nicescroll\jquery.nicescroll.min.js" />
+    <Content Include="Resources\Components\jquery\blockui\jquery.blockui.min.js" />
+    <Content Include="Resources\Components\jquery\cron\jqCron.cn.js" />
+    <Content Include="Resources\Components\jquery\cron\jqCron.css" />
+    <Content Include="Resources\Components\jquery\cron\jqCron.js" />
+    <Content Include="Resources\Components\jquery\jquery-1.12.4.js" />
+    <Content Include="Resources\Components\jquery\jquery-1.12.4.min.js" />
+    <Content Include="Resources\Components\jquery\jquery.cookie.js" />
+    <Content Include="Resources\Components\jquery\pace\pace.css" />
+    <Content Include="Resources\Components\jquery\pace\pace.js" />
+    <Content Include="Resources\Components\jquery\pace\pace.min.css" />
+    <Content Include="Resources\Components\jquery\pace\pace.min.js" />
+    <Content Include="Resources\Components\jquery\spinjs\jquery.spin.js" />
+    <Content Include="Resources\Components\jquery\spinjs\spin.js" />
+    <Content Include="Resources\Components\jquery\sweetalert\ie9.css" />
+    <Content Include="Resources\Components\jquery\sweetalert\sweet-alert.css" />
+    <Content Include="Resources\Components\jquery\sweetalert\sweet-alert.html" />
+    <Content Include="Resources\Components\jquery\sweetalert\sweet-alert.js" />
+    <Content Include="Resources\Components\jquery\sweetalert\sweet-alert.min.js" />
+    <Content Include="Resources\Components\jquery\toastr\toastr.css" />
+    <Content Include="Resources\Components\jquery\toastr\toastr.js" />
+    <Content Include="Resources\Components\jquery\toastr\toastr.min.css" />
+    <Content Include="Resources\Components\jquery\toastr\toastr.min.js" />
+    <Content Include="Resources\Components\json2\json2.js" />
+    <Content Include="Resources\Components\layer\layer.js" />
+    <Content Include="Resources\Components\layer\skin\default\icon-ext.png" />
+    <Content Include="Resources\Components\layer\skin\default\icon.png" />
+    <Content Include="Resources\Components\layer\skin\default\loading-0.gif" />
+    <Content Include="Resources\Components\layer\skin\default\loading-1.gif" />
+    <Content Include="Resources\Components\layer\skin\default\loading-2.gif" />
+    <Content Include="Resources\Components\layer\skin\layer.css" />
+    <Content Include="Resources\Components\layer\skin\layer.ext.css" />
+    <Content Include="Resources\Components\layui\css\layui.css" />
+    <Content Include="Resources\Components\layui\css\layui.mobile.css" />
+    <Content Include="Resources\Components\layui\css\modules\code.css" />
+    <Content Include="Resources\Components\layui\css\modules\laydate\default\laydate.css" />
+    <Content Include="Resources\Components\layui\css\modules\layer\default\icon-ext.png" />
+    <Content Include="Resources\Components\layui\css\modules\layer\default\icon.png" />
+    <Content Include="Resources\Components\layui\css\modules\layer\default\icon1.png" />
+    <Content Include="Resources\Components\layui\css\modules\layer\default\layer.css" />
+    <Content Include="Resources\Components\layui\css\modules\layer\default\loading-0.gif" />
+    <Content Include="Resources\Components\layui\css\modules\layer\default\loading-1.gif" />
+    <Content Include="Resources\Components\layui\css\modules\layer\default\loading-2.gif" />
+    <Content Include="Resources\Components\layui\css\power.css" />
+    <Content Include="Resources\Components\layui\css\style.css" />
+    <Content Include="Resources\Components\layui\font\iconfont.svg" />
+    <Content Include="Resources\Components\layui\images\addd.png" />
+    <Content Include="Resources\Components\layui\images\aws_lt.png" />
+    <Content Include="Resources\Components\layui\images\aws_rt.png" />
+    <Content Include="Resources\Components\layui\images\bggaaa.png" />
+    <Content Include="Resources\Components\layui\images\border_right.png" />
+    <Content Include="Resources\Components\layui\images\calendar_bg.png" />
+    <Content Include="Resources\Components\layui\images\close.png" />
+    <Content Include="Resources\Components\layui\images\del.png" />
+    <Content Include="Resources\Components\layui\images\del_on.png" />
+    <Content Include="Resources\Components\layui\images\error_tip_bg.png" />
+    <Content Include="Resources\Components\layui\images\face\0.gif" />
+    <Content Include="Resources\Components\layui\images\face\1.gif" />
+    <Content Include="Resources\Components\layui\images\face\10.gif" />
+    <Content Include="Resources\Components\layui\images\face\11.gif" />
+    <Content Include="Resources\Components\layui\images\face\12.gif" />
+    <Content Include="Resources\Components\layui\images\face\13.gif" />
+    <Content Include="Resources\Components\layui\images\face\14.gif" />
+    <Content Include="Resources\Components\layui\images\face\15.gif" />
+    <Content Include="Resources\Components\layui\images\face\16.gif" />
+    <Content Include="Resources\Components\layui\images\face\17.gif" />
+    <Content Include="Resources\Components\layui\images\face\18.gif" />
+    <Content Include="Resources\Components\layui\images\face\19.gif" />
+    <Content Include="Resources\Components\layui\images\face\2.gif" />
+    <Content Include="Resources\Components\layui\images\face\20.gif" />
+    <Content Include="Resources\Components\layui\images\face\21.gif" />
+    <Content Include="Resources\Components\layui\images\face\22.gif" />
+    <Content Include="Resources\Components\layui\images\face\23.gif" />
+    <Content Include="Resources\Components\layui\images\face\24.gif" />
+    <Content Include="Resources\Components\layui\images\face\25.gif" />
+    <Content Include="Resources\Components\layui\images\face\26.gif" />
+    <Content Include="Resources\Components\layui\images\face\27.gif" />
+    <Content Include="Resources\Components\layui\images\face\28.gif" />
+    <Content Include="Resources\Components\layui\images\face\29.gif" />
+    <Content Include="Resources\Components\layui\images\face\3.gif" />
+    <Content Include="Resources\Components\layui\images\face\30.gif" />
+    <Content Include="Resources\Components\layui\images\face\31.gif" />
+    <Content Include="Resources\Components\layui\images\face\32.gif" />
+    <Content Include="Resources\Components\layui\images\face\33.gif" />
+    <Content Include="Resources\Components\layui\images\face\34.gif" />
+    <Content Include="Resources\Components\layui\images\face\35.gif" />
+    <Content Include="Resources\Components\layui\images\face\36.gif" />
+    <Content Include="Resources\Components\layui\images\face\37.gif" />
+    <Content Include="Resources\Components\layui\images\face\38.gif" />
+    <Content Include="Resources\Components\layui\images\face\39.gif" />
+    <Content Include="Resources\Components\layui\images\face\4.gif" />
+    <Content Include="Resources\Components\layui\images\face\40.gif" />
+    <Content Include="Resources\Components\layui\images\face\41.gif" />
+    <Content Include="Resources\Components\layui\images\face\42.gif" />
+    <Content Include="Resources\Components\layui\images\face\43.gif" />
+    <Content Include="Resources\Components\layui\images\face\44.gif" />
+    <Content Include="Resources\Components\layui\images\face\45.gif" />
+    <Content Include="Resources\Components\layui\images\face\46.gif" />
+    <Content Include="Resources\Components\layui\images\face\47.gif" />
+    <Content Include="Resources\Components\layui\images\face\48.gif" />
+    <Content Include="Resources\Components\layui\images\face\49.gif" />
+    <Content Include="Resources\Components\layui\images\face\5.gif" />
+    <Content Include="Resources\Components\layui\images\face\50.gif" />
+    <Content Include="Resources\Components\layui\images\face\51.gif" />
+    <Content Include="Resources\Components\layui\images\face\52.gif" />
+    <Content Include="Resources\Components\layui\images\face\53.gif" />
+    <Content Include="Resources\Components\layui\images\face\54.gif" />
+    <Content Include="Resources\Components\layui\images\face\55.gif" />
+    <Content Include="Resources\Components\layui\images\face\56.gif" />
+    <Content Include="Resources\Components\layui\images\face\57.gif" />
+    <Content Include="Resources\Components\layui\images\face\58.gif" />
+    <Content Include="Resources\Components\layui\images\face\59.gif" />
+    <Content Include="Resources\Components\layui\images\face\6.gif" />
+    <Content Include="Resources\Components\layui\images\face\60.gif" />
+    <Content Include="Resources\Components\layui\images\face\61.gif" />
+    <Content Include="Resources\Components\layui\images\face\62.gif" />
+    <Content Include="Resources\Components\layui\images\face\63.gif" />
+    <Content Include="Resources\Components\layui\images\face\64.gif" />
+    <Content Include="Resources\Components\layui\images\face\65.gif" />
+    <Content Include="Resources\Components\layui\images\face\66.gif" />
+    <Content Include="Resources\Components\layui\images\face\67.gif" />
+    <Content Include="Resources\Components\layui\images\face\68.gif" />
+    <Content Include="Resources\Components\layui\images\face\69.gif" />
+    <Content Include="Resources\Components\layui\images\face\7.gif" />
+    <Content Include="Resources\Components\layui\images\face\70.gif" />
+    <Content Include="Resources\Components\layui\images\face\71.gif" />
+    <Content Include="Resources\Components\layui\images\face\8.gif" />
+    <Content Include="Resources\Components\layui\images\face\9.gif" />
+    <Content Include="Resources\Components\layui\images\header_logo.png" />
+    <Content Include="Resources\Components\layui\images\header_rt_bg.png" />
+    <Content Include="Resources\Components\layui\images\high_srh_down.png" />
+    <Content Include="Resources\Components\layui\images\high_srh_up.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_1.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_1_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_2.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_2_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_3.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_3_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_4.png" />
+    <Content Include="Resources\Components\layui\images\icon_action_4_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_admin.png" />
+    <Content Include="Resources\Components\layui\images\icon_arrow_bot.png" />
+    <Content Include="Resources\Components\layui\images\icon_aws.png" />
+    <Content Include="Resources\Components\layui\images\icon_aws_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_big.png" />
+    <Content Include="Resources\Components\layui\images\icon_big_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_checkbox.png" />
+    <Content Include="Resources\Components\layui\images\icon_checkbox_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_circle_add.png" />
+    <Content Include="Resources\Components\layui\images\icon_ckx.png" />
+    <Content Include="Resources\Components\layui\images\icon_ckx_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_date.png" />
+    <Content Include="Resources\Components\layui\images\icon_date_big.png" />
+    <Content Include="Resources\Components\layui\images\icon_date_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_exit.png" />
+    <Content Include="Resources\Components\layui\images\icon_funcs.png" />
+    <Content Include="Resources\Components\layui\images\icon_funcs_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_line.png" />
+    <Content Include="Resources\Components\layui\images\icon_li_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_nav_down.png" />
+    <Content Include="Resources\Components\layui\images\icon_nav_rt.png" />
+    <Content Include="Resources\Components\layui\images\icon_nav_up.png" />
+    <Content Include="Resources\Components\layui\images\icon_phone.png" />
+    <Content Include="Resources\Components\layui\images\icon_radio.png" />
+    <Content Include="Resources\Components\layui\images\icon_radio_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_select_bot.png" />
+    <Content Include="Resources\Components\layui\images\icon_select_bot2.png" />
+    <Content Include="Resources\Components\layui\images\icon_select_top.png" />
+    <Content Include="Resources\Components\layui\images\icon_select_top2.png" />
+    <Content Include="Resources\Components\layui\images\icon_sjx.png" />
+    <Content Include="Resources\Components\layui\images\icon_sma.png" />
+    <Content Include="Resources\Components\layui\images\icon_sma_on.png" />
+    <Content Include="Resources\Components\layui\images\icon_span_1.png" />
+    <Content Include="Resources\Components\layui\images\icon_span_2.png" />
+    <Content Include="Resources\Components\layui\images\icon_span_3.png" />
+    <Content Include="Resources\Components\layui\images\icon_span_4.png" />
+    <Content Include="Resources\Components\layui\images\icon_srh.png" />
+    <Content Include="Resources\Components\layui\images\icon_srh2.png" />
+    <Content Include="Resources\Components\layui\images\icon_srh2_on.png" />
+    <Content Include="Resources\Components\layui\images\jimei_logo.png" />
+    <Content Include="Resources\Components\layui\images\lgNav_arrow_bot.png" />
+    <Content Include="Resources\Components\layui\images\lgNav_arrow_bott.png" />
+    <Content Include="Resources\Components\layui\images\lgNav_arrow_top.png" />
+    <Content Include="Resources\Components\layui\images\lgNav_arrow_topp.png" />
+    <Content Include="Resources\Components\layui\images\line.png" />
+    <Content Include="Resources\Components\layui\images\line_conn.gif" />
+    <Content Include="Resources\Components\layui\images\lion.png" />
+    <Content Include="Resources\Components\layui\images\loginFm_bg.png" />
+    <Content Include="Resources\Components\layui\images\login_btn.png" />
+    <Content Include="Resources\Components\layui\images\login_checkbox.png" />
+    <Content Include="Resources\Components\layui\images\login_checkbox_on.png" />
+    <Content Include="Resources\Components\layui\images\login_lock.png" />
+    <Content Include="Resources\Components\layui\images\login_user.png" />
+    <Content Include="Resources\Components\layui\images\logo_2.png" />
+    <Content Include="Resources\Components\layui\images\mulu.png" />
+    <Content Include="Resources\Components\layui\images\mulu_on.png" />
+    <Content Include="Resources\Components\layui\images\pic_yzm.png" />
+    <Content Include="Resources\Components\layui\images\pingu.png" />
+    <Content Include="Resources\Components\layui\images\pingu_on.png" />
+    <Content Include="Resources\Components\layui\images\q1.png" />
+    <Content Include="Resources\Components\layui\images\q11.png" />
+    <Content Include="Resources\Components\layui\images\q2.png" />
+    <Content Include="Resources\Components\layui\images\q22.png" />
+    <Content Include="Resources\Components\layui\images\q3.png" />
+    <Content Include="Resources\Components\layui\images\q33.png" />
+    <Content Include="Resources\Components\layui\images\q4.png" />
+    <Content Include="Resources\Components\layui\images\q44.png" />
+    <Content Include="Resources\Components\layui\images\q5.png" />
+    <Content Include="Resources\Components\layui\images\q55.png" />
+    <Content Include="Resources\Components\layui\images\q6.png" />
+    <Content Include="Resources\Components\layui\images\q66.png" />
+    <Content Include="Resources\Components\layui\images\q7.png" />
+    <Content Include="Resources\Components\layui\images\q77.png" />
+    <Content Include="Resources\Components\layui\images\QR_code.png" />
+    <Content Include="Resources\Components\layui\images\rili.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon1.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon11.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon2.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon22.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon3.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon33.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon4.png" />
+    <Content Include="Resources\Components\layui\images\sdNav_icon44.png" />
+    <Content Include="Resources\Components\layui\images\sider_toggle_x.png" />
+    <Content Include="Resources\Components\layui\images\sider_toggle_y.png" />
+    <Content Include="Resources\Components\layui\images\smNav_arrow.png" />
+    <Content Include="Resources\Components\layui\images\srh_bg.png" />
+    <Content Include="Resources\Components\layui\images\srh_down.png" />
+    <Content Include="Resources\Components\layui\images\srh_up.png" />
+    <Content Include="Resources\Components\layui\images\sub_nav_on.png" />
+    <Content Include="Resources\Components\layui\images\sub_sz_p_bg.png" />
+    <Content Include="Resources\Components\layui\images\sub_sz_p_bg_on.png" />
+    <Content Include="Resources\Components\layui\images\td_select_bot.png" />
+    <Content Include="Resources\Components\layui\images\tools_bg.jpg" />
+    <Content Include="Resources\Components\layui\images\top_bg.png" />
+    <Content Include="Resources\Components\layui\images\year_next.png" />
+    <Content Include="Resources\Components\layui\images\year_next_on.png" />
+    <Content Include="Resources\Components\layui\images\year_prev.png" />
+    <Content Include="Resources\Components\layui\images\year_prev_on.png" />
+    <Content Include="Resources\Components\layui\images\zTreeStandard.png" />
+    <Content Include="Resources\Components\layui\js\jquery-1.4.4.min.js" />
+    <Content Include="Resources\Components\layui\layui.all.js" />
+    <Content Include="Resources\Components\layui\layui.extend.js" />
+    <Content Include="Resources\Components\layui\layui.js" />
+    <Content Include="Resources\Components\layui\lay\modules\carousel.js" />
+    <Content Include="Resources\Components\layui\lay\modules\code.js" />
+    <Content Include="Resources\Components\layui\lay\modules\element.js" />
+    <Content Include="Resources\Components\layui\lay\modules\flow.js" />
+    <Content Include="Resources\Components\layui\lay\modules\form.js" />
+    <Content Include="Resources\Components\layui\lay\modules\jquery.js" />
+    <Content Include="Resources\Components\layui\lay\modules\laydate.js" />
+    <Content Include="Resources\Components\layui\lay\modules\layedit.js" />
+    <Content Include="Resources\Components\layui\lay\modules\layer.js" />
+    <Content Include="Resources\Components\layui\lay\modules\laypage.js" />
+    <Content Include="Resources\Components\layui\lay\modules\laytpl.js" />
+    <Content Include="Resources\Components\layui\lay\modules\mobile.js" />
+    <Content Include="Resources\Components\layui\lay\modules\rate.js" />
+    <Content Include="Resources\Components\layui\lay\modules\table.js" />
+    <Content Include="Resources\Components\layui\lay\modules\tree.js" />
+    <Content Include="Resources\Components\layui\lay\modules\upload.js" />
+    <Content Include="Resources\Components\layui\lay\modules\util.js" />
+    <Content Include="Resources\Components\momentjs\moment.js" />
+    <Content Include="Resources\Components\My97DatePicker\calendar.js" />
+    <Content Include="Resources\Components\My97DatePicker\lang\en.js" />
+    <Content Include="Resources\Components\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="Resources\Components\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="Resources\Components\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="Resources\Components\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="Resources\Components\My97DatePicker\skin\default\img.gif" />
+    <Content Include="Resources\Components\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="Resources\Components\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="Resources\Components\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="Resources\Components\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="Resources\Components\My97DatePicker\WdatePicker.js" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\readme.txt" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="Resources\Components\My97DatePicker\开发包\skin\whyGreen\img.gif" />
+    <Content Include="Resources\Components\pinyin1.2.1.js" />
+    <Content Include="Resources\Components\rsa\Barrett.js" />
+    <Content Include="Resources\Components\rsa\BigInt.js" />
+    <Content Include="Resources\Components\rsa\CodeManage.js" />
+    <Content Include="Resources\Components\rsa\RSA.js" />
+    <Content Include="Resources\Components\spinjs\jquery.spin.js" />
+    <Content Include="Resources\Components\spinjs\spin.js" />
+    <Content Include="Resources\Components\superslider\jquery.SuperSlide.2.1.1.js" />
+    <Content Include="Resources\Components\superslider\jquery.SuperSlide.2.1.3.source.js" />
+    <Content Include="Resources\Components\sweetalert\ie9.css" />
+    <Content Include="Resources\Components\sweetalert\sweet-alert.css" />
+    <Content Include="Resources\Components\sweetalert\sweet-alert.html" />
+    <Content Include="Resources\Components\sweetalert\sweet-alert.js" />
+    <Content Include="Resources\Components\sweetalert\sweet-alert.min.js" />
+    <Content Include="Resources\Components\toastr\toastr.css" />
+    <Content Include="Resources\Components\toastr\toastr.js" />
+    <Content Include="Resources\Components\toastr\toastr.min.css" />
+    <Content Include="Resources\Components\toastr\toastr.min.js" />
+    <Content Include="Resources\Components\vue-seamless-scroll\vue-seamless-scroll.js" />
+    <Content Include="Resources\Components\vue\httpVueLoader.js" />
+    <Content Include="Resources\Components\vue\polyfill.min.js" />
+    <Content Include="Resources\Components\vue\vue-router.min.js" />
+    <Content Include="Resources\Components\vue\vue.min.js" />
+    <Content Include="Resources\Components\ztree\api\apiCss\api.js" />
+    <Content Include="Resources\Components\ztree\api\apiCss\common.css" />
+    <Content Include="Resources\Components\ztree\api\apiCss\common_ie6.css" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\apiMenu.gif" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\apiMenu.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\background.jpg" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\chinese.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\close.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\contact-bg.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\english.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\header-bg.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\lightbulb.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\overlay_arrow.gif" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\overlay_arrow.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\overlay_bg.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\overlay_close_IE6.gif" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\zTreeStandard.gif" />
+    <Content Include="Resources\Components\ztree\api\apiCss\img\zTreeStandard.png" />
+    <Content Include="Resources\Components\ztree\api\apiCss\jquery-1.6.2.min.js" />
+    <Content Include="Resources\Components\ztree\api\apiCss\jquery.ztree.core-3.5.js" />
+    <Content Include="Resources\Components\ztree\api\apiCss\zTreeStyleForApi.css" />
+    <Content Include="Resources\Components\ztree\api\API_cn.html" />
+    <Content Include="Resources\Components\ztree\api\API_en.html" />
+    <Content Include="Resources\Components\ztree\css\awesomeStyle\awesome.css" />
+    <Content Include="Resources\Components\ztree\css\awesomeStyle\img\loading.gif" />
+    <Content Include="Resources\Components\ztree\css\demo.css" />
+    <Content Include="Resources\Components\ztree\css\metroStyle\img\line_conn.png" />
+    <Content Include="Resources\Components\ztree\css\metroStyle\img\loading.gif" />
+    <Content Include="Resources\Components\ztree\css\metroStyle\img\metro.gif" />
+    <Content Include="Resources\Components\ztree\css\metroStyle\img\metro.png" />
+    <Content Include="Resources\Components\ztree\css\metroStyle\metroStyle.css" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="Resources\Components\ztree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="Resources\Components\ztree\demo\cn\bigdata\common.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\bigdata\diy_async.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\bigdata\page.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\async.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\async_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\click.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\custom_font.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\custom_icon.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\custom_iconSkin.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\expand.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\noicon.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\noline.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\otherMouse.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\searchNodes.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\simpleData.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\standardData.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\update_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\core\url.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\checkbox.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\checkbox_chkDisabled.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\checkbox_count.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\checkbox_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\checkbox_halfCheck.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\checkbox_nocheck.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\radio.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\radio_chkDisabled.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\radio_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\radio_halfCheck.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\excheck\radio_nocheck.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\async_edit.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\drag.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\drag_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\drag_super.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\edit.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\edit_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\edit_super.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exedit\multiTree.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exhide\checkbox.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exhide\common.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\exhide\radio.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\index.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\asyncForAll.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\awesome.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\checkbox_radio.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\diydom.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\dragWithOther.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\left_menu.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\left_menuForOutLook.gif" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\left_menuForOutLook.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\left_menuForOutLook.png" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\metro.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\oneclick.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\oneroot.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\rightClickMenu.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\select_menu.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\select_menu_checkbox.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\select_menu_radio.html" />
+    <Content Include="Resources\Components\ztree\demo\cn\super\singlepath.html" />
+    <Content Include="Resources\Components\ztree\demo\en\bigdata\common.html" />
+    <Content Include="Resources\Components\ztree\demo\en\bigdata\diy_async.html" />
+    <Content Include="Resources\Components\ztree\demo\en\bigdata\page.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\async.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\async_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\click.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\custom_font.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\custom_icon.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\custom_iconSkin.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\expand.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\noicon.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\noline.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\otherMouse.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\searchNodes.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\simpleData.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\standardData.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\update_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\en\core\url.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\checkbox.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\checkbox_chkDisabled.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\checkbox_count.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\checkbox_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\checkbox_halfCheck.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\checkbox_nocheck.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\radio.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\radio_chkDisabled.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\radio_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\radio_halfCheck.html" />
+    <Content Include="Resources\Components\ztree\demo\en\excheck\radio_nocheck.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\async_edit.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\drag.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\drag_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\drag_super.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\edit.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\edit_fun.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\edit_super.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exedit\multiTree.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exhide\checkbox.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exhide\common.html" />
+    <Content Include="Resources\Components\ztree\demo\en\exhide\radio.html" />
+    <Content Include="Resources\Components\ztree\demo\en\index.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\asyncForAll.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\awesome.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\checkbox_radio.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\diydom.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\dragWithOther.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\left_menu.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\left_menuForOutLook.gif" />
+    <Content Include="Resources\Components\ztree\demo\en\super\left_menuForOutLook.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\left_menuForOutLook.png" />
+    <Content Include="Resources\Components\ztree\demo\en\super\metro.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\oneclick.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\oneroot.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\rightClickMenu.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\select_menu.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\select_menu_checkbox.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\select_menu_radio.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\singlepath.html" />
+    <Content Include="Resources\Components\ztree\demo\en\super\ztree.html" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.all-3.5.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.all-3.5.min.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.core-3.5.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.core-3.5.min.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.excheck-3.5.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.excheck-3.5.min.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.exedit-3.5.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.exedit-3.5.min.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.exhide-3.5.js" />
+    <Content Include="Resources\Components\ztree\js\jquery.ztree.exhide-3.5.min.js" />
+    <Content Include="Resources\Scripts\boana.formCompare.js" />
+    <Content Include="Resources\Scripts\boanda.js" />
+    <Content Include="Resources\Scripts\boanda.platform.js" />
+    <Content Include="Resources\Scripts\boanda.workflow.js" />
+    <Content Include="Resources\Scripts\home\index.js" />
+    <Content Include="Resources\Scripts\jquery.boanda.js" />
+    <Content Include="Resources\Scripts\libs\boanda.blockUI.js" />
+    <Content Include="Resources\Scripts\libs\boanda.spin.js" />
+    <Content Include="Resources\Scripts\libs\boanda.mini-alert.js" />
+    <Content Include="Resources\Scripts\libs\boanda.toastr.js" />
+    <Content Include="Resources\Scripts\libs\boanda.win.js" />
+    <Content Include="Resources\Scripts\page\common.js" />
+    <Content Include="Areas\SysConfig\Views\SystemNumber\Index.cshtml" />
+    <Content Include="Areas\SysConfig\Views\SystemNumber\EditOrAdd.cshtml" />
+    <Content Include="Areas\SysConfig\Views\SystemNumber\GetDeailList.cshtml" />
+    <Content Include="Areas\SysConfig\Views\SystemNumber\EditOrAddSerial.cshtml" />
+    <Content Include="Resources\Skins\css\reset.css" />
+    <Content Include="Resources\Skins\css\sheji.css" />
+    <Content Include="Resources\Skins\css\style.css" />
+    <Content Include="Resources\Skins\images\bg_jieguo.png" />
+    <Content Include="Resources\Skins\images\bg_khjg.png" />
+    <Content Include="Resources\Skins\images\bg_sd.png" />
+    <Content Include="Resources\Skins\images\big_itbg.png" />
+    <Content Include="Resources\Skins\images\big_itbg_on.png" />
+    <Content Include="Resources\Skins\images\btn_fjwry.png" />
+    <Content Include="Resources\Skins\images\btn_start.png" />
+    <Content Include="Resources\Skins\images\cir_1.png" />
+    <Content Include="Resources\Skins\images\cir_2.png" />
+    <Content Include="Resources\Skins\images\cir_3.png" />
+    <Content Include="Resources\Skins\images\cir_4.png" />
+    <Content Include="Resources\Skins\images\date_zdy.png" />
+    <Content Include="Resources\Skins\images\dlg_bg.png" />
+    <Content Include="Resources\Skins\images\dlg_bg_2.png" />
+    <Content Include="Resources\Skins\images\dlg_clo.png" />
+    <Content Include="Resources\Skins\images\dqsz_bg.png" />
+    <Content Include="Resources\Skins\images\ec_4.png" />
+    <Content Include="Resources\Skins\images\ec_5.png" />
+    <Content Include="Resources\Skins\images\ec_6.png" />
+    <Content Include="Resources\Skins\images\ec_7.png" />
+    <Content Include="Resources\Skins\images\ec_8.png" />
+    <Content Include="Resources\Skins\images\ec_9.png" />
+    <Content Include="Resources\Skins\images\fx_1.png" />
+    <Content Include="Resources\Skins\images\fx_2.png" />
+    <Content Include="Resources\Skins\images\fx_3.png" />
+    <Content Include="Resources\Skins\images\fx_4.png" />
+    <Content Include="Resources\Skins\images\fx_5.png" />
+    <Content Include="Resources\Skins\images\hd_bf.png" />
+    <Content Include="Resources\Skins\images\hd_bg.png" />
+    <Content Include="Resources\Skins\images\icon_pause.png" />
+    <Content Include="Resources\Skins\images\ic_bff.png" />
+    <Content Include="Resources\Skins\images\ic_sd.png" />
+    <Content Include="Resources\Skins\images\ic_st_1.png" />
+    <Content Include="Resources\Skins\images\ic_st_2.png" />
+    <Content Include="Resources\Skins\images\ic_tbss.png" />
+    <Content Include="Resources\Skins\images\ic_tbxj.png" />
+    <Content Include="Resources\Skins\images\ic_wr_1.png" />
+    <Content Include="Resources\Skins\images\ic_wr_2.png" />
+    <Content Include="Resources\Skins\images\ic_wr_3.png" />
+    <Content Include="Resources\Skins\images\ic_wr_4.png" />
+    <Content Include="Resources\Skins\images\ic_zz.png" />
+    <Content Include="Resources\Skins\images\kuang.png" />
+    <Content Include="Resources\Skins\images\kuang_s.png" />
+    <Content Include="Resources\Skins\images\libg_1.png" />
+    <Content Include="Resources\Skins\images\libg_1s.png" />
+    <Content Include="Resources\Skins\images\ljpfl_1.png" />
+    <Content Include="Resources\Skins\images\ljpfl_2.png" />
+    <Content Include="Resources\Skins\images\ljpfl_3.png" />
+    <Content Include="Resources\Skins\images\logo.png" />
+    <Content Include="Resources\Skins\images\map.png" />
+    <Content Include="Resources\Skins\images\pic_sz.png" />
+    <Content Include="Resources\Skins\images\pic_xc.png" />
+    <Content Include="Resources\Skins\images\pie_1.png" />
+    <Content Include="Resources\Skins\images\pie_2.png" />
+    <Content Include="Resources\Skins\images\pie_3.png" />
+    <Content Include="Resources\Skins\images\point_bg.png" />
+    <Content Include="Resources\Skins\images\pop_bg.png" />
+    <Content Include="Resources\Skins\images\progress_bg.png" />
+    <Content Include="Resources\Skins\images\rank_1.png" />
+    <Content Include="Resources\Skins\images\rank_2.png" />
+    <Content Include="Resources\Skins\images\rank_3.png" />
+    <Content Include="Resources\Skins\images\repx.png" />
+    <Content Include="Resources\Skins\images\rtbg_1.png" />
+    <Content Include="Resources\Skins\images\rtbg_2.png" />
+    <Content Include="Resources\Skins\images\rtjt.png" />
+    <Content Include="Resources\Skins\images\rtjts.png" />
+    <Content Include="Resources\Skins\images\sma_bf.png" />
+    <Content Include="Resources\Skins\images\sma_bg.png" />
+    <Content Include="Resources\Skins\images\sma_bg_on.png" />
+    <Content Include="Resources\Skins\images\tit_1.png" />
+    <Content Include="Resources\Skins\images\tit_2.png" />
+    <Content Include="Resources\Skins\images\tit_3.png" />
+    <Content Include="Resources\Skins\images\tit_4.png" />
+    <Content Include="Resources\Skins\images\tuli.png" />
+    <Content Include="Resources\Skins\images\tuli_3.png" />
+    <Content Include="Resources\Skins\images\tuli_qq.png" />
+    <Content Include="Resources\Skins\images\u3_bg.png" />
+    <Content Include="Resources\Skins\images\wrgk_bg.png" />
+    <Content Include="Resources\Skins\images\xlcd_arrow.png" />
+    <Content Include="test2.html" />
+    <Content Include="test.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Rms\Controllers\DepartmentController.cs" />
+    <Compile Include="Areas\Rms\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Rms\Controllers\PermissionController.cs" />
+    <Compile Include="Areas\Rms\Controllers\RmsExtendController.cs" />
+    <Compile Include="Areas\Rms\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Rms\Controllers\SystemController.cs" />
+    <Compile Include="Areas\Rms\Controllers\UserController.cs" />
+    <Compile Include="Areas\Rms\Models\RoleModel.cs" />
+    <Compile Include="Areas\Rms\Models\TreeModel.cs" />
+    <Compile Include="Areas\Rms\RmsAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ToolController.cs" />
+    <Compile Include="Core\AsposeWordHelper.cs" />
+    <Compile Include="Core\CookieSession.cs" />
+    <Compile Include="Core\Extensions\AjaxResultExtension.cs" />
+    <Compile Include="Core\Extensions\UserInfoExtension.cs" />
+    <Compile Include="Core\KeyValuePairExtensions.cs" />
+    <Compile Include="Core\ObjectExtensions.cs" />
+    <Compile Include="Core\UserActionLogFilterAttribute.cs" />
+    <Compile Include="Core\SystemLogFilterAttribute.cs" />
+    <Compile Include="Core\PageValueProviderFactory.cs" />
+    <Compile Include="Core\WebHelper.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tool\DepartmentWithUser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="cas.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\Components\jquery\sweetalert\sweet-alert.scss" />
+    <Content Include="Resources\Components\jquery\toastr\toastr.less" />
+    <Content Include="Resources\Components\jquery\toastr\toastr.scss" />
+    <Content Include="Resources\Components\ztree\css\awesomeStyle\awesome.less" />
+    <Content Include="Resources\Components\ztree\css\awesomeStyle\fa.less" />
+    <Content Include="Resources\Components\ztree\demo\cn\asyncData\getNodes.php" />
+    <Content Include="Resources\Components\ztree\demo\cn\asyncData\getNodesForBigData.php" />
+    <Content Include="Resources\Components\ztree\demo\en\asyncData\getNodes.php" />
+    <Content Include="Resources\Components\ztree\demo\en\asyncData\getNodesForBigData.php" />
+    <Content Include="Resources\Components\ztree\zTree.v3.jquery.json" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Rms\Views\Department\Index.cshtml" />
+    <Content Include="Areas\Rms\Views\Permission\Index.cshtml" />
+    <Content Include="Areas\Rms\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Rms\Views\Role\UserRole.cshtml" />
+    <Content Include="Areas\Rms\Views\System\Index.cshtml" />
+    <Content Include="Areas\Rms\Views\User\Index.cshtml" />
+    <Content Include="Areas\Rms\Views\web.config" />
+    <Content Include="Resources\Components\sweetalert\sweet-alert.scss" />
+    <Content Include="Resources\Components\toastr\toastr.less" />
+    <Content Include="Resources\Components\toastr\toastr.scss" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Internal.cshtml" />
+    <Content Include="Areas\SysConfig\Views\IndustryType\AddOrEdit.cshtml" />
+    <Content Include="Areas\SysConfig\Views\IndustryType\Index.cshtml" />
+    <Content Include="Areas\SysConfig\Views\PublicCodeSet\AddOrEdit.cshtml" />
+    <Content Include="Areas\SysConfig\Views\PublicCodeSet\Index.cshtml" />
+    <Content Include="Areas\SysConfig\Views\PublicCodeValue\AddOrEdit.cshtml" />
+    <Content Include="Areas\SysConfig\Views\PublicCodeValue\Index.cshtml" />
+    <Content Include="Areas\SysConfig\Views\RegionalismCode\AddOrEdit.cshtml" />
+    <Content Include="Areas\SysConfig\Views\RegionalismCode\Index.cshtml" />
+    <Content Include="Areas\SysConfig\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Error\NoAuth.cshtml" />
+    <Content Include="Areas\Rms\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Rms\Views\Permission\MenuPermission.cshtml" />
+    <Content Include="Areas\Rms\Views\Permission\PermissionItem.cshtml" />
+    <Content Include="Areas\SysConfig\Views\SystemConfig\Index.cshtml" />
+    <Content Include="Areas\Rms\Views\Permission\GrantPermissionItem.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Areas\SysConfig\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\SysConfig\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\SysConfig\Views\WhiteList\Index.cshtml" />
+    <Content Include="Areas\SysConfig\Views\WhiteList\AddOrEdit.cshtml" />
+    <Content Include="Areas\SysConfig\Views\UpgradeApp\Index.cshtml" />
+    <Content Include="Areas\SysConfig\Views\UpgradeApp\AddOrEdit.cshtml" />
+    <Content Include="Resources\Components\layui\font\iconfont.eot" />
+    <Content Include="Resources\Components\layui\font\iconfont.ttf" />
+    <Content Include="Resources\Components\layui\font\iconfont.woff" />
+    <Content Include="Views\Shared\_Layout.Script.cshtml" />
+    <Content Include="Views\Shared\_Layout.Style.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Rms\Views\Department\AddOrEdit.cshtml" />
+    <Content Include="Areas\Rms\Views\User\AddOrEdit.cshtml" />
+    <Content Include="Areas\Rms\Views\System\AddOrEdit.cshtml" />
+    <Content Include="Areas\Rms\Views\Role\AddOrEdit.cshtml" />
+    <Content Include="Areas\Rms\Views\Menu\AddOrEdit.cshtml" />
+    <Content Include="Areas\Rms\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Rms\Views\Permission\AddOrEditPermissionItem.cshtml" />
+    <Content Include="libman.json" />
+    <Content Include="App\home\home.vue" />
+    <Content Include="App\home\WaterAnalysis.vue" />
+    <Content Include="App\home\WaterAnalysisDbs.vue" />
+    <Content Include="App\home\WaterAnalysisWryzx.vue" />
+    <Content Include="App\home\WaterAnalysisJjdm.vue" />
+    <Content Include="App\home\GisDmDetail.vue" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Views\Shared\_Layout.Script.V2.cshtml" />
+    <Content Include="Views\Shared\_Layout.Style.V2.cshtml" />
+    <Content Include="Views\Shared\_Layout.V2.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="test.vue" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\core\directive\multilFileUpload\" />
+    <Folder Include="Areas\Rms\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Boanda.Attachment\Boanda.Attachment.Core\Boanda.Common.Core.csproj">
+      <Project>{527d11d7-1a59-439f-b8f6-0fadd5551e16}</Project>
+      <Name>Boanda.Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.Attachment\Boanda.Attachment.Service\Boanda.Common.Service.csproj">
+      <Project>{0fa6c837-ad67-4322-a32e-e2a17cf4cae5}</Project>
+      <Name>Boanda.Common.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.Attachment\Boanda.Attachment.Web\Boanda.Common.Web.csproj">
+      <Project>{b1968c41-f207-46d4-9485-384cc570aedd}</Project>
+      <Name>Boanda.Common.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.Core.Extends\Boanda.Core.Extends.csproj">
+      <Project>{7589264A-FCD3-44D5-BD57-774D901BA965}</Project>
+      <Name>Boanda.Core.Extends</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.DSJPT.HZ.Data\Boanda.DSJPT.HZ.Data.csproj">
+      <Project>{c1f2aafd-5d45-494d-af98-a1c8549bb3fe}</Project>
+      <Name>Boanda.DSJPT.HZ.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.UserManager\Boanda.UserManager.Core\Boanda.UserManager.Core.csproj">
+      <Project>{34b053c9-98ed-4ae6-80b1-a1dbe2840d13}</Project>
+      <Name>Boanda.UserManager.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.UserManager\Boanda.UserManager.IService\Boanda.UserManager.IService.csproj">
+      <Project>{c35d0622-e0e1-40d4-96a8-fa96a20ccebe}</Project>
+      <Name>Boanda.UserManager.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.UserManager\Boanda.UserManager.Repository\Boanda.UserManager.Repository.csproj">
+      <Project>{bfcc1f93-47b7-4673-82e2-1be658212fd4}</Project>
+      <Name>Boanda.UserManager.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Boanda.UserManager\Boanda.UserManager.Service\Boanda.UserManager.Service.csproj">
+      <Project>{a538f8fb-c5a7-432e-acea-f91138da83bc}</Project>
+      <Name>Boanda.UserManager.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.5.0.3766\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.5.0.3766\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.5.0.3766\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.1\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.1\build\net451\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.109.1\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.109.1\build\net451\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

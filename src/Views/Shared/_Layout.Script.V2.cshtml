@@ -1,0 +1,72 @@
+﻿<!--[if lt IE 9]>
+<script src="~/Resources/Components/html5.min.js"></script>
+<script src="~/Resources/Components/respond.min.js"></script>
+<![endif]-->
+<script src="~/Resources/Components/layui/layui.all.js"></script>
+<script src="~/Resources/Components/layui/layui.extend.js"></script>
+<script>
+    var $$ = {}, $ = jQuery = layui.$;
+</script>
+<script src="~/Resources/Components/angularjs/angular-1.2.9.min.js"></script>
+<script src="~/Resources/Components/angularjs/i18n/angular-locale_zh-cn.js"></script>
+<script src="~/Resources/Components/angularjs/angular-1.2.9-sanitize.min.js"></script>
+<script src="~/Resources/Components/momentjs/moment.js"></script>
+<script src="~/Resources/Components/json2/json2.js"></script>
+<script src="~/App/app.js"></script>
+<script src="~/App/filter/app.filter.js"></script>
+<script src="~/App/core/service/pd.action.js"></script>
+<script src="~/App/core/service/pd.resource.js"></script>
+<script src="~/App/core/service/pd.table.js"></script>
+<script src="~/App/core/directive/dropdownList/pdDropdownList.js"></script>
+<script src="~/App/core/directive/dropdownTree/pdDropdownTree.js"></script>
+<script src="~/App/core/directive/checkboxList/pdCheckboxList.js"></script>
+<script src="~/App/core/directive/radioList/pdRadioList.js"></script>
+<script src="~/App/core/directive/formReadonly/formReadonly.js"></script>
+<script src="~/App/core/directive/fileUpload/fileUpload.js"></script>
+<script src="~/App/core/directive/multiFileUpload/multiFileUpload.js"></script>
+<script src="~/App/core/directive/cityPicker/cityPicker.js"></script>
+<script src="~/App/core/directive/datepicker/pdDatepicker.js"></script>
+<script src="~/App/core/directive/cascade/pdCascade.js"></script>
+<script src="~/App/core/filter/pdCheckboxFilter.js"></script>
+
+<script type="text/javascript">
+    window.onerror = function () {
+        return false;
+    }
+
+    $$.appPath = '@(Request.ApplicationPath.TrimEnd('/') + "/")';
+    angular.module("app").constant("appRoot", $$.appPath);
+
+    $$.configs = {
+        winMax: ["1000px", "580px"],
+        winArea: ["950px", "450px"],
+        winMiddle: ["750px", "350px"],
+        winSmall: ["400px", "200px"]
+    }
+
+    $$.styles = {
+        al:'text-align: left'
+        ,
+        ar:'text-align:right'
+    }
+
+    function formatDate(record, format) {
+        var value = record[this.field];
+        if (value) {
+            return layui.util.toDateString(value, format || 'yyyy-MM-dd');
+        }
+    }
+
+    function formatTime(record, format) {
+        var value = record[this.field];
+        if (value) {
+            return layui.util.toDateString(value, format|| 'yyyy-MM-dd HH');
+        }
+    }
+</script>
+
+<script src="~/Resources/Components/jquery/jquery.cookie.js"></script>
+<script src="~/Resources/Components/ztree/js/jquery.ztree.all-3.5.min.js"></script>
+<script src="~/Resources/Components/ztree/js/jquery.ztree.exhide-3.5.min.js"></script>
+<script src="~/Resources/Components/toastr/toastr.min.js"></script>
+<script src="~/Resources/Components/nicescroll/jquery.nicescroll.min.js"></script>

@@ -1,0 +1,109 @@
+﻿<div class="pd010 layui-form" ng-controller="indexCtrl as vm" ng-cloak>
+    <div class="grid-infor">
+        <div class="data-sethead fr">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-filter="form1" ng-click="vm.searchUserRole()">保存</button>
+            <button class="layui-btn   layui-btn-sm layui-btn-primary" onclick="parent.layer.closeAll()">取消</button>
+        </div>
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <ul id="leftTree" class="ztree"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script type="text/javascript">
+    angular.module("app.rms")
+        .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", function ($scope, pdActionSvr, pdResourceSvr) {
+            var addOrEditUrl = '@Url.Action("SaveRole")';
+            var vm = this, treeObj = {};
+            vm.init = function () {
+                var setting = {
+                    view: {
+                        selectedMulti: false
+                    },
+                    check: {
+                        chkboxType: { "Y": "ps", "N": "ps" },
+                        chkStyle: "checkbox",
+                        enable: true
+                    },
+                    async: {
+                        enable: true,
+                        url: '@Url.Action("GetRoleTree", "Role")',
+                        autoParam: ["id", "text"]
+                    },
+                    data: {
+                        key: {
+                            checked: "isChecked"
+                        },
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: 0
+                        }
+                    }, callback: {
+                        onClick: function (e, treeId, treeNode, clickFlag) {
+                            $.fn.zTree.getZTreeObj("leftTree").checkNode(treeNode, !treeNode.isChecked, !treeNode.isChecked);
+                        }
+                    }
+                }
+
+                treeObj = $.fn.zTree.init($("#leftTree"), setting, null);
+
+                initMenuTree();
+            }
+
+            vm.init();
+
+            vm.searchUserRole = function () {
+                var treeObj = $.fn.zTree.getZTreeObj("leftTree");
+                var nodes = treeObj.getCheckedNodes(true);
+                if (nodes == null || nodes.length == 0) {
+                    $$.notify.error("请选角色");
+                    return false;
+                }
+                var jsbhs = new Array();
+                $.each(nodes, function (i, e) {
+                    jsbhs.push(e.id);
+                });
+
+                $.ajax({
+                    url: '@Url.Action("SaveUserRole")/@(ViewBag.Id)',
+                    data: { jsbhs: jsbhs },
+                    type: "post",
+                    success: function (text) {
+                        if (text.Result == "1") {
+                            pdActionSvr.success("保存成功");
+                        } else {
+                            pdActionSvr.error("保存失败");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $$.notify.error("加载失败");
+                    }
+                });
+            }
+
+            function initMenuTree() {
+                $.ajax({
+                    url: '@Url.Action("GetUserRole")/@(ViewBag.Id)',
+                    type: "post",
+                    success: function (text) {
+                        //选中指定节点
+                        $.each(text, function (i, e) {
+                            var node = treeObj.getNodeByParam("id", e.JSBH);
+                            if (node != null) {
+                                node.isChecked = true;
+                                treeObj.updateNode(node);
+                            }
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $$.notify.error("请选角色");
+                    }
+                });
+            }
+        }]);
+    </script>
+}

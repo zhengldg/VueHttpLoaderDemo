@@ -1,0 +1,190 @@
+﻿@{
+}
+<div class="layui-form pd010" ng-controller="indexCtrl as vm">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md3"  style="padding-top:15px;">
+            <dropdown-list id="SSXT" style="width:100%" url='@(Url.Action("GetSystemDropDownList","System"))' textField="name" valueField="id" ng-model="vm.search.SSXT" defaultFirst="true"></dropdown-list>
+            <ul id="tree" class="ztree" style="overflow-y:auto;"></ul>
+        </div>
+        <div class="layui-col-md9">
+            <div class="layui-row" lay-filter="form1" id="">
+                <div class="layui-form data-sethead">
+                    <div class="layui-inline">
+                        <input type="text" style="width:200px" placeholder="请输入菜单名称" class="layui-input" ng-model="vm.search.Name">
+                    </div>
+                    <button class="layui-btn layui-btn-sm  layui-btn-green " ng-click="vm.searchTable()">搜索</button>
+                    <button class="layui-btn layui-btn-sm  layui-btn-normal" ng-click="vm.add()">新增</button>
+                </div>
+                <table id="grid" lay-filter="grid"></table>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script>
+        window.onload = window.onresize = function () {
+            $('#tree').height($(window).height() - 62);
+        }
+
+        var url = "@Url.Action("GetMenus")";
+        var userUrl = "@Url.Action("GetUser", "User")";
+
+        angular.module("app.rms")
+            .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", "$rootScope", "pdTableSvr", function ($scope, pdActionSvr, pdResourceSvr, $rootScope, pdTableSvr) {
+                var vm = this;
+                vm.eventClick = function () {
+
+                }
+                vm.search = {
+                    Name: "",
+                    SSXT: null,
+                    FCDXH: ''
+                };
+
+                vm.treeSearch = null, table = {};
+                var allTreeNode = [];
+
+                vm.searchUser = function () {
+                    table = pdTableSvr.render({
+                        elem: '#grid',
+                        url: url,
+                        where: vm.search,
+                        cols: [[
+                            { type: 'numbers', title: '序号', width: "5%" },
+                            { field: 'CDXH', title: '菜单编号', width: "20%" },
+                            { field: 'CDMC', title: '菜单名称', width: "30%"},
+                            { field: 'PXH', title: '排序号', width: "10%" },
+                            {
+                                field: 'SFYX', title: '状态', width: "15%",templet: function (record) {
+                                    if (record.SFYX == 1) {
+                                        return '有效';
+                                    } else {
+                                        return '无效';
+                                    }
+                                }
+                            },
+                            { title: '操作', fixed: 'right',  align: 'center', toolbar: '#barDemo' }
+                        ]]
+                    });
+
+                    layui.table.on('tool(grid)', function (obj) {
+                        var xh = obj.data.XH;
+                        if (obj.event === 'detail') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '查看菜单信息',
+                                content: '@Url.Action("Detail")' + '/' + xh
+                            });
+                        } else if (obj.event === 'edit') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '修改菜单信息',
+                                content: '@Url.Action("AddOrEdit")' + '/' + xh + '?SSXT=' + vm.search.SSXT,
+                                end: function () {
+                                    vm.initTree();
+                                }
+                            });
+                        }
+                        else if (obj.event === 'del') {
+                            top.layer.confirm('确定删除么', function (index) {
+                                pdResourceSvr.post('@Url.Action("DelMenu")', { id: xh })
+                                    .then(function (rsp) {
+                                        if (rsp.Result) {
+                                            obj.del();
+                                            pdActionSvr.success('删除成功');
+                                             vm.initTree();
+                                        } else {
+                                            pdActionSvr.error('删除失败');
+                                        }
+                                    })
+                                    .finally(function () {
+                                        top.layer.close(index);
+                                    })
+                            });
+                        }
+                    });
+                }
+
+                vm.add = function () {
+                    vm.entity = { XH: '' };
+                    top.layer.open({
+                        type: 2,
+                        area: $$.configs.winArea,
+                        title: '新增菜单',
+                        content: '@Url.Action("AddOrEdit")?SSXT=' + vm.search.SSXT + '&FCDXH=' + vm.search.FCDXH,
+                        end: function () {
+                            vm.initTree();
+                        }
+                    });
+                }
+
+                $scope.$watch('vm.search.SSXT', function (newVal) {
+                    vm.initTree();
+                })
+
+
+                function onClickTreeNode(event, treeId, treeNode) {
+                    vm.search.FCDXH = treeNode.id;
+                    vm.searchUser();
+                }
+
+                var treeObj = {};
+                vm.initTree = function () {
+                    var isFirst = true;
+                    var setting = {
+                        async: {
+                            enable: true,
+                            url: '@Url.Action("GetMenusTree","Menu")?SSXT=' + vm.search.SSXT,
+                        },
+                        callback: {
+                            onClick: onClickTreeNode,
+                            onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                                if (isFirst) {
+                                    var node = treeObj.getNodes();
+                                    if (node && node.length) {
+                                        node = node[0];
+                                        treeObj.selectNode(node);
+                                        onClickTreeNode(null, node.id, node);
+                                        isFirst = false;
+                                    }
+                                }
+                            }
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true,
+                                idKey: "id",
+                                pIdKey: "pId",
+                                rootPId: null
+                            }
+                        }
+                    };
+                    treeObj = $.fn.zTree.init($("#tree"), setting);
+                }
+
+                vm.searchTable = function () {
+                    table.reload({
+                        where: vm.search,
+                        page: true
+                    });
+                }
+
+                vm.init = function () {
+                    vm.initTree();
+                }
+
+                reload = function () {
+                    table.reload()
+                }
+
+                vm.init();
+            }]);
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+}

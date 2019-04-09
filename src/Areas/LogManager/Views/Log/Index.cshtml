@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "系统日志";
+}
+<div class="pd010" ng-controller="indexCtrl as vm">
+    <div class="layui-row" lay-filter="form1">
+        <div class="layui-form data-sethead">
+            <div class="layui-inline">
+                <input type="text" style="width:200px" placeholder="操作人" class="layui-input" ng-model="vm.search.Operator">
+            </div>
+            <div class="layui-inline">
+                <dropdown-list ng-disabled="true" id="Operatetype" url='@Url.Action("GetOperatorTypes")' textField="name" valueField="id" ng-model="vm.search.Operatetype"></dropdown-list>
+                <dropdown-list ng-disabled="true" id="Module" url='@Url.Action("GetLogTypes")' textField="id" valueField="id" ng-model="vm.search.Module"></dropdown-list>
+            </div>
+            <button class="layui-btn layui-btn-sm layui-btn-green " ng-click="vm.searchTable()">搜索</button>
+        </div>
+        <table id="grid" lay-filter="grid"></table>
+    </div>
+</div>
+@section script{
+    <script type="text/javascript">
+        angular.module("app.rms")
+            .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", "pdTableSvr", function ($scope, pdActionSvr, pdResourceSvr, pdTableSvr) {
+
+                var url = '@Url.Action("GetLogs")';
+                var table = {};
+                var vm = this;
+                vm.search = {
+                    Operator: "",
+                    Operatetype: null,
+                    Module:null
+                };
+                console.log(vm.filter);
+                vm.init = function () {
+                    table = pdTableSvr.render({
+                        elem: '#grid',
+                        url: url,
+                        where: vm.filter,
+                        cols: [[
+                            { type: 'numbers', title: '序号', width: '5%' },
+                            { field: 'Module', title: '模块', width: '10%', align: 'center' },
+                            {
+                                field: 'Operatetype', title: '操作类型', width: '10%', templet: function (record) {
+                                    switch (record.Operatetype) {
+                                        case "#Login":
+                                            return "登录操作";
+                                            break;
+                                        case "#Query":
+                                            return "#浏览操作";
+                                            break;
+                                        case "#Save":
+                                            return "保存操作";
+                                            break;
+                                        case "#Update":
+                                            return "修改操作";
+                                            break;
+                                        case "#Delete":
+                                            return "删除操作";
+                                            break;
+                                        case "#Print":
+                                            return "打印操作";
+                                            break;
+                                        case "#Export":
+                                            return "导出操作";
+                                            break;
+                                        case "#Upload":
+                                            return "上传操作";
+                                            break;
+                                        case "#Other":
+                                            return "其他操作";
+                                            break;
+                                        default: return record.Operatetype;
+                                            break;
+                                    }
+                                }
+                            },
+                            { field: 'Message', title: '内容', width: '35%'},
+                            { field: 'MachineAddress', title: 'IP', width: '12%' },
+                            { field: 'Operator', title: '操作者', width: '8%' },
+                            {
+                                field: 'Operatdate', title: '时间', templet: function (record) {
+
+                                    return layui.util.toDateString(record.Operatdate);
+                                }
+                            }
+                        ]],
+                        response: {
+                            statusName: 'isSuccess' //数据状态的字段名称，默认：code
+                            , statusCode: null      //成功的状态码，默认：0
+                            , msgName: 'message'    //状态信息的字段名称，默认：msg
+                            , countName: 'Total'    //数据总数的字段名称，默认：count
+                            , dataName: 'Items'     //数据列表的字段名称，默认：data
+                        }
+                    });
+
+                    @*layui.table.on('tool(grid)', function (obj) {
+                        var xh = obj.data.XH;
+                        if (obj.event === 'detail') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '查看日志信息',
+                                content: '@Url.Action("Detail")' + '/' + xh
+                            });
+                        }
+                    });*@
+                }
+
+                vm.searchTable = function () {
+                    vm.search.Operatetype = $scope.vm.search.Operatetype;
+                    vm.search.Module = $scope.vm.search.Module;
+                    console.log(vm.search);
+                    table.reload({
+                        where: vm.search,
+                        page: true
+                    });
+                }
+                reload = function () {
+                    table.reload()
+                }
+
+                vm.init();
+            }]);
+    </script>
+}
+

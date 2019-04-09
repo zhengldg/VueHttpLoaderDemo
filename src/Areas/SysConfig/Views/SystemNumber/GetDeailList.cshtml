@@ -1,0 +1,215 @@
+﻿@{
+    var id = ViewBag.id;
+}
+@*<div class="search-wrap">
+        <table class="table-search">
+            <tr>
+                <td class="table-tools">
+                    @*<button type="button" class="com-btn fr" onclick="goBack()">返回</button>
+                </td>
+                <td class="table-tools">
+                    <button type="button" class="com-btn fr" onclick="EditOrAddSerial()">新增</button>
+                </td>
+            </tr>
+        </table>
+    </div>*@
+<div class="pd010" ng-controller="indexCtrl as vm">
+    <div class="layui-row" lay-filter="form1">
+        <div class="layui-form data-sethead">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" ng-click="vm.EditOrAddSerial()">新增</button>
+        </div>
+        <table id="grid" lay-filter="grid"></table>
+    </div>
+</div>
+@*<div class="mini-fit">
+        <div id="DataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowalternating="true"
+             url='@Url.Action("GetDeailPage")' sortfield="CJSJ" allowresize="true" totalfield="Total" datafield="Items" showvgridlines="true" pagesize="15" sizelist="[15,30,50,100]">
+            <div property="columns">
+                <div type="indexcolumn" width="35">序号</div>
+                <div field="BHMC" name="BHMC" width="100" align="center" headeralign="center" allowsort="true">编号名称</div>
+                <div field="QZ" name="QZ" width="100" align="center" headeralign="center" allowsort="true">前缀</div>
+                <div field="HZ" name="HZ" width="80" align="center" headeralign="center" allowsort="true">后缀</div>
+                <div field="DQZ" name="DQZ" width="60" align="center" headeralign="center" allowsort="true">当前值</div>
+                <div field="ZXZ" name="ZXZ" width="60" align="center" headeralign="center" allowsort="true">最小值</div>
+                <div field="ZDZ" name="ZDZ" width="60" align="center" headeralign="center" allowsort="true">最大值</div>
+                <div field="BZ" name="BZ" width="80" align="center" headeralign="center" allowsort="true">备注</div>
+                <div name="action" width="90" headeralign="center" align="center">操作</div>
+            </div>
+        </div>
+    </div>*@
+@section script
+{
+    <script>
+
+          angular.module("app.rms")
+              .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", "pdTableSvr", function ($scope, pdActionSvr, pdResourceSvr, pdTableSvr) {
+                var SBLXList = [{ "id": "IOS", "text": "IOS设备" }, { "id": "Android", "text": "Android设备" }];
+                var url = '@Url.Action("GetDeailPage")';
+                var winUrl = '@Url.Action("EditOrAddSerial")';
+                var deleteUrl = '@Url.Action("DeleteSerial")';
+
+                var table = {};
+                var vm = this;
+                vm.search = {
+                    Filter:'@id',
+                    KEY: "",
+                    SBLX: null,
+                    SBZT: null,
+                    sortfield: "CJSJ",
+                    sortorder:"DESC"
+                };
+                vm.init = function () {
+                    table = pdTableSvr.render({
+                        elem: '#grid',
+                        url: url,
+                        where: vm.search,
+                        cols: [[
+                            { type: 'numbers', title: '序号', width: '5%' },
+                            { field: 'BHMC', title: '编号名称', width: '10%', align: 'center' },
+                            { field: 'QZ', title: '前缀', width: '15%'},
+                            { field: 'HZ', title: '后缀', width: '15%' },
+                            { field: 'DQZ', title: '当前值', width: '10%' },
+                            { field: 'ZXZ', title: '最小值', width: '10%' },
+                            { field: 'ZDZ', title: '最大值', width: '10%' },
+                            { field: 'BZ', title: '备注', width: '10%' },
+                            { title: '操作', fixed: 'right',  toolbar: '#eventBar' }
+                        ]],
+                        response: {
+                            statusName: 'isSuccess' //数据状态的字段名称，默认：code
+                            , statusCode: null      //成功的状态码，默认：0
+                            , msgName: 'message'    //状态信息的字段名称，默认：msg
+                            , countName: 'Total'    //数据总数的字段名称，默认：count
+                            , dataName: 'Items'     //数据列表的字段名称，默认：data
+                        }
+                    });
+
+
+                     layui.table.on('tool(grid)', function (obj) {
+                        var xh = obj.data.XH;
+                    if (obj.event === 'edit') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '编辑',
+                                content: winUrl + '/' +xh,
+                                end: function () {
+                                    reload();
+                                }
+                            });
+
+                    }  else if (obj.event === 'del') {
+                        top.layer.confirm('确定删除么', function (index) {
+                            pdResourceSvr.post(deleteUrl, { id: xh })
+                                .then(function (rsp) {
+                                    console.log(rsp);
+                                    if (rsp.Result) {
+                                        obj.del();
+                                        pdActionSvr.success('删除成功');
+                                    } else {
+                                        pdActionSvr.error('删除失败');
+                                    }
+                                })
+                                .finally(function () {
+                                    top.layer.close(index);
+                                })
+                        });
+                    }
+                    });
+                }
+
+                vm.searchTable = function () {
+                    vm.search.KEY = $scope.vm.search.YHID;
+                    console.log(vm.search);
+                    table.reload({
+                        where: vm.search,
+                        page: true
+                    });
+                }
+                vm.EditOrAddSerial = function () {
+                    vm.entity = { XH: '' };
+                    top.layer.open({
+                        type: 2,
+                        area: $$.configs.winArea,
+                        title: '新增',
+                        content: winUrl+'?sxbh=@id',
+                        end: function () {
+                            reload();
+                        }
+                    });
+                }
+
+                reload = function () {
+                    table.reload()
+                }
+
+                vm.init();
+            }]);
+
+        @*mini.parse();
+        var DataGrid = mini.get("DataGrid");
+        DataGrid.load({Filter:'@(Request["XH"])'});
+        DataGrid.on("drawcell", function (e) {
+            var record = e.record,
+                column = e.column,
+                field = e.field,
+                value = e.value;
+            //action列，超连接操作按钮
+            if (column.name == "action") {
+                e.cellStyle = "text-align:center";
+                e.cellHtml = "";
+                e.cellHtml += '<a href="javascript:EditOrAddSerial(\'' + record.XH + '\')">编辑</a>&nbsp;';
+                e.cellHtml += '<a href="javascript:Delete(\'' + record.XH + '\')">删除</a>&nbsp;';
+            }
+        });
+        function goBack()
+        {
+            window.CloseOwnerWindow();
+        }
+        function EditOrAddSerial(XH)
+        {
+            var title = "";
+            var url = "";
+            if (XH) {
+                title = '修改系统编号';
+                url = '@Url.Action("EditOrAddSerial")?XH=' + XH;
+            } else {
+                title = "新增系统编号";
+                url = '@Url.Action("EditOrAddSerial")?SXBH='+'@(Request["XH"])';
+            }
+            mini.open({
+                url: url,
+                title: title, width: 750, height: 360,
+                ondestroy: function (action) {
+                    DataGrid.reload();
+                }
+            });
+        }
+        function Delete(XH) {
+            $$.message.confirm("确定删除当前行？", "提示", function (action) {
+                if (action == "ok") {
+                    $$.ui.setBusy(null,
+                        $$.ajax({
+                            url: '@Url.Action("DeleteSerial")?XH=' + XH,
+                            type: 'GET'
+                        }).done(function (data) {
+                            if (data.Result == "1") {
+                                $$.notify.success("删除成功！");
+                                DataGrid.reload();
+                            }
+                            else
+                                $$.notify.error("删除失败!");
+                        })
+                        .always(function () {
+                            $$.ui.clearBusy(null);
+                        })
+                    )
+                }
+            });
+        }*@
+
+    </script>
+    <script type="text/html" id="eventBar">
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+}

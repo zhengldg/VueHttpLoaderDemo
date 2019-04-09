@@ -1,0 +1,222 @@
+﻿@{
+
+    ViewBag.Title = "系统编号";
+}
+<div class="pd010" ng-controller="indexCtrl as vm">
+    <div class="layui-row" lay-filter="form1">
+        <div class="layui-form data-sethead">
+            <div class="layui-inline">
+                <input type="text" style="width:200px" placeholder="请输入编号名称" class="layui-input" ng-model="vm.search.BHMC">
+            </div>
+            <div class="layui-inline">
+
+            </div>
+            <button class="layui-btn layui-btn-sm  layui-btn-green " ng-click="vm.searchTable()">搜索</button>
+            <button class="layui-btn layui-btn-sm  layui-btn-normal" ng-click="vm.add()">新增</button>
+        </div>
+        <table id="grid" lay-filter="grid"></table>
+    </div>
+</div>
+@section script
+{
+    <script type="text/javascript">
+   angular.module("app.rms")
+       .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", "pdTableSvr", function ($scope, pdActionSvr, pdResourceSvr, pdTableSvr) {
+                var url = '@Url.Action("GetPage")';
+                var winUrl = '@Url.Action("EditOrAdd")';
+                var deleteUrl = '@Url.Action("Delete")';
+                var SHurl = '@Url.Action("GetDeailList")';
+                var table = {};
+                var vm = this;
+                vm.search = {
+                    KEY: "",
+                    SBLX: null,
+                    SBZT: null,
+                    sortfield: "CJSJ",
+                    sortorder:"DESC"
+                };
+                vm.init = function () {
+                    table = pdTableSvr.render({
+                        elem: '#grid',
+                        url: url,
+                        where: vm.search,
+                        cols: [[
+                            { type: 'numbers', title: '序号', width: '5%' },
+                            { field: 'BHMC', title: '编号名称', width: '10%', align: 'center' },
+                            { field: 'QZGS', title: '前缀格式', width: '15%'},
+                            { field: 'LSHGS', title: '流水号格式', width: '10%' },
+                            { field: 'HZGS', title: '后缀格式', width: '10%' },
+                            { field: 'ZXZ', title: '最小值', width: '10%' },
+                            { field: 'ZDZ', title: '最大值', width: '10%' },
+                            { field: 'ORGID', title: '组织机构', width: '10%' },
+                            { title: '操作', fixed: 'right', toolbar: '#eventBar' }
+                        ]],
+                        response: {
+                            statusName: 'isSuccess' //数据状态的字段名称，默认：code
+                            , statusCode: null      //成功的状态码，默认：0
+                            , msgName: 'message'    //状态信息的字段名称，默认：msg
+                            , countName: 'Total'    //数据总数的字段名称，默认：count
+                            , dataName: 'Items'     //数据列表的字段名称，默认：data
+                        }
+                    });
+
+
+                     layui.table.on('tool(grid)', function (obj) {
+                         var xh = obj.data.SXBH;
+                         console.log(winUrl + '/' + xh);
+                    if (obj.event === 'edit') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '修改系统编号',
+                                content: winUrl + '/' +xh,
+                                end: function () {
+                                    reload();
+                                }
+                            });
+
+                    } else if (obj.event === 'SH') {
+                        top.layer.open({
+                            type: 2,
+                            area: $$.configs.winArea,
+                            title: '系统编号维护列表',
+                            content: SHurl + '/' + xh,
+                            end: function () {
+                                reload();
+                            }
+                        });
+
+                    } else if (obj.event === 'del') {
+                        top.layer.confirm('确定删除么', function (index) {
+                            pdResourceSvr.post(deleteUrl, { id: xh })
+                                .then(function (rsp) {
+
+                                    if (rsp.Result == "1") {
+                                        obj.del();
+                                        pdActionSvr.success('删除成功');
+                                    } else {
+                                        pdActionSvr.error('删除失败');
+                                    }
+                                })
+                                .finally(function () {
+                                    top.layer.close(index);
+                                })
+                        });
+                    }
+                    });
+                }
+
+                vm.searchTable = function () {
+                    vm.search.KEY = $scope.vm.search.YHID;
+                    console.log(vm.search);
+                    table.reload({
+                        where: vm.search,
+                        page: true
+                    });
+                }
+                vm.add = function () {
+                    vm.entity = { XH: '' };
+                    top.layer.open({
+                        type: 2,
+                        area: $$.configs.winArea,
+                        title: '新增系统编号',
+                        content: winUrl,
+                        end: function () {
+                            reload();
+                        }
+                    });
+                }
+
+                reload = function () {
+                    table.reload()
+                }
+
+                vm.init();
+            }]);
+
+
+        @*mini.parse();
+        var DataGrid = mini.get("DataGrid");
+        DataGrid.load();
+        DataGrid.on("drawcell", function (e) {
+            var record = e.record,
+                column = e.column,
+                field = e.field,
+                value = e.value;
+            //action列，超连接操作按钮
+            if (column.name == "action") {
+                e.cellStyle = "text-align:center";
+                e.cellHtml = "";
+                e.cellHtml += '<a href="javascript:EditOrAdd(\'' + record.SXBH + '\')">编辑</a>&nbsp;';
+                e.cellHtml += '<a href="javascript:Delete(\'' + record.SXBH + '\')">删除</a>&nbsp;';
+                e.cellHtml += '<a href="javascript:searchDeail(\'' + record.SXBH + '\')">系统编号维护</a>&nbsp;';
+            }
+        });
+        //搜索内容
+        function queryData() {
+            var val = mini.get('txtKEY').value;
+            DataGrid.load({ Filter: val });
+        };
+        function EditOrAdd(id) {
+            var title = "";
+            var url = "";
+            if (id) {
+                title = '修改系统编号';
+                url = '@Url.Action("EditOrAdd")?XH=' + id;
+            }else{
+                title = "新增系统编号";
+                url = '@Url.Action("EditOrAdd")';
+            }
+            $$.win.open(url, title, function (action) {
+                if (action == "ok") {
+                    DataGrid.reload();
+                }
+            });
+        }
+        function searchDeail(XH)
+        {
+            var title = '系统编号维护列表';
+            var url = '@Url.Action("GetDeailList")?XH=' + XH;
+            $$.win.open(url, title, function (action) {
+                DataGrid.reload();
+            });
+        }
+        function Delete(XH)
+        {
+            top.mini.confirm("确定删除当前行？", "提示", function (action) {
+                if (action == "ok") {
+                    $$.ui.setBusy(null,
+                        $$.ajax({
+                            url: '@Url.Action("Delete")?id=' + XH,
+                            type: 'GET'
+                        }).done(function (data) {
+                            if (data.Result == "1") {
+                                $$.notify.success("删除成功！");
+                                DataGrid.reload();
+                            }
+                            else
+                                $$.notify.error("删除失败!");
+                        })
+                        .always(function () {
+                            $$.ui.clearBusy(null);
+                        })
+                    )
+                }
+            });
+        }
+
+        $(function () {
+            $("#txtKEY").keydown(function (event) {
+                if (event.keyCode == 13) {
+                    queryData();
+                    return false;
+                }
+            });
+        });*@
+    </script>
+    <script type="text/html" id="eventBar">
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="SH">系统编号维护 </a>
+    </script>
+}

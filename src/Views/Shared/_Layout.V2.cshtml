@@ -1,0 +1,22 @@
+﻿@using StackExchange.Profiling;
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-language" content="zh-CN" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>丽水市花园云智慧监管平台</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    @Html.Partial("_Layout.Style.V2")
+    @RenderSection("style", false)
+</head>
+<body >
+    @RenderBody()
+    @Html.Partial("_Layout.Script.V2")
+    @RenderSection("script", false)
+    @MiniProfiler.RenderIncludes()
+</body>
+</html>

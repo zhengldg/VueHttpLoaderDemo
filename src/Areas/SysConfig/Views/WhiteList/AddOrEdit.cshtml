@@ -1,0 +1,207 @@
+﻿@{
+    var id = ViewContext.RouteData.Values["id"];
+}
+
+<div class="pd010 layui-form" ng-controller="indexCtrl as vm" ng-cloak>
+    <div class="grid-infor">
+        <table>
+            <tr>
+                <td>
+                    <input type="hidden" ng-model="vm.entity.XH" />
+                    <span class="red">*</span>用户ID
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.YHID" ng-readonly="vm.isEdit" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>用户名
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.YHM" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>设备识别号
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.IMEI" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>设备类型
+                </td>
+                <td>
+                    <dropdown-list ng-disabled="true" id="SBLX" url="@Url.Action("GetGgdmz", "Tool", new { area = "", DMJBH = "SBLX" })" textField="text" valueField="id" ng-model="vm.entity.SBLX"></dropdown-list>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="red">*</span>审核状态
+                </td>
+                <td>
+                    <dropdown-list ng-disabled="true" id="SHZT" url="@Url.Action("GetGgdmz", "Tool", new { area = "", DMJBH = "SHZT" })" textField="text" valueField="text" ng-model="vm.entity.SHZT"></dropdown-list>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="foot-btnp">
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-filter="form1" lay-submit>保存</button>
+    <button class="layui-btn   layui-btn-sm layui-btn-primary" onclick="parent.layer.closeAll()">取消</button>
+</div>
+
+@*<div class="mini-fit">
+        <div class="gridToolbar clearfix">
+            <div class="edit-toolbar table-tools">
+                <button class="com-btn fr" onclick="SaveData()">保存</button>
+            </div>
+        </div>
+        <form id="form2" method="post" class="editform" style="margin-top:5px;">
+            <table width="100%" class="item-c-table">
+                <tr>
+                    <td class="thd"><font color="red">*</font>用户ID：</td>
+                    <td colspan="3">
+                        <input type="text" name="XH" maxlength="50" class="mini-textbox" style="display:none;" value="@Model.XH" id="XH" style="width: 98%">
+                        <input type="text" name="YHID" id="YHID" class="mini-textbox" maxlength="25" value="@Model.YHID" required="true" requirederrortext="用户ID不能为空" style="width: 100%">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd"><font color="red">*</font>用户名：</td>
+                    <td colspan="3">
+                        <input type="text" name="YHM" class="mini-textbox" maxlength="25" value="@Model.YHM" required="true" requirederrortext="用户名" style="width: 100%">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd"><font color="red">*</font>设备识别号：</td>
+                    <td colspan="3">
+                        <input type="text" name="IMEI" class="mini-textbox" maxlength="200" value="@Model.IMEI" style="width: 100%">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd"><font color="red">*</font>设备类型：</td>
+                    <td>
+                        <input type="text" name="SBLX" id="SBLX" maxlength="50" class="mini-combobox" data='[{ "id": "IOS", "text": "IOS设备" }, { "id": "Android", "text": "Android设备" }]' value="@Model.SBLX" required="true" requirederrortext="设备类型不能为空" style="width: 100%">
+                    </td>
+                    <td class="thd"><font color="red">*</font>审核状态：</td>
+                    <td>
+                        <input type="text" name="SHZT" id="SHZT" maxlength="50" class="mini-combobox" url="@Url.Action("GetGgdmz", "Tool", new { area = "", DMJBH = "SHZT" })" value="@Model.SHZT" required="true" requirederrortext="审核状态不能为空" style="width: 100%">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>*@
+
+<!-- 主体结束 -->
+@section script
+{
+    <script type="text/javascript">
+         var id = '@id';
+        angular.module("app.ydyd")
+            .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", function ($scope, pdActionSvr, pdResourceSvr) {
+                var edit = id == "" ? false : true;
+                var addOrEditUrl = '@Url.Action("AddOrEdit")?edit=' + edit;
+
+                var vm = this;
+                vm.entity = { };
+                vm.filter = { sortfield: 'xh', KEY: '' };
+
+                vm.save = function () {
+                    console.log(addOrEditUrl);
+                    pdResourceSvr.post(addOrEditUrl, vm.entity)
+                        .then(function (rsp) {
+                            if (rsp.Result) {
+                                pdActionSvr.success('保存成功', '提示');
+                                vm.isEdit = true;
+                            } else {
+                                pdActionSvr.error(rsp.message || '保存失败');
+                            }
+                        });
+                }
+
+                vm.init = function () {
+                    if (id) {
+                        vm.isEdit = true;
+                        pdResourceSvr.get('@Url.Action("Get")?id=' + id)
+                            .then(function (rsp) {
+                                console.log(rsp);
+                                vm.entity = rsp || {};
+                            });
+                    }
+                }
+
+                vm.init();
+
+                //监听提交
+                layui.form.on('submit(form1)', function (data) {
+                    vm.save();
+                });
+            }]);
+
+
+
+
+
+        @*mini.parse();
+        var form = new mini.Form("form2");
+        var isEdit = false;
+        if ('@Model.XH') {
+            isEdit = true;
+        }
+
+        function SaveData() {
+            if (!mini.validateForm(form)) return false;
+            var formData = form.getData();
+
+            if (isEdit) {
+                $$.ui.setBusy(null,
+                    $$.ajax({
+                        url: '@Url.Action("AddOrEdit")?edit=true',
+                        type: 'POST',
+                        data: JSON.stringify(formData)
+                    }).done(function (data) {
+                        if (data.Result == "1") {
+                            $$.notify.success("保存成功！");
+                        }
+                        else
+                            $$.notify.error("保存失败!");
+                    })
+                        .always(function () {
+                            $$.ui.clearBusy(null);
+                        })
+                    )
+            }
+            else {
+                $$.ui.setBusy(null,
+                        $$.ajax({
+                            url: '@Url.Action("AddOrEdit")?edit=false',
+                            type: 'POST',
+                            data: JSON.stringify(formData)
+                        }).done(function (data) {
+                            if (data.Result == "1") {
+                                $$.notify.success("保存成功！");
+                            }
+                            else
+                                $$.notify.error("保存失败!");
+                        })
+                        .always(function () {
+                            $$.ui.clearBusy(null);
+                        })
+                    )
+            }
+        }
+
+        $(function () {
+            window.onload = window.onresize = function () { setHeight() };
+            function setHeight() {
+                var winH = $(window).height();
+                var frameHeight = winH;
+                $('.mini-fit').height(frameHeight - 35);
+            };
+        });*@
+    </script>
+}

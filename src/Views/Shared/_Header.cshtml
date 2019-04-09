@@ -1,0 +1,13 @@
+﻿<img src="~/Resources/Skins/default/images/mainbg.png" class="mainbg" />
+<div class="pd-header">
+    <div class="pd-head">
+        <ul class="pd-menu">
+            <li ng-class="{on:$route.current.originalPath=='/ecolo'}" ng-click="switchNav(1,'ecolo' ,'STGNQ')">生态管控</li>
+            <li ng-class="{on:$route.current.originalPath=='/pollution'}"  ng-click="switchNav(2,'pollution' ,'Wry')" >污染源管理</li>
+            <li ng-class="{on:$route.current.originalPath=='/air'}" class="pd-nbsp" ng-click="switchNav(3,'air' ,'Air')" >蓝天保卫</li>
+            <li ng-class="{on:$route.current.originalPath=='/water'}" ng-click="switchNav(4,'water' ,'Water')" >碧水行动</li>
+            <li ng-class="{on:$route.current.originalPath=='/dust'}"  ng-click="switchNav(5,'dust' ,'Soil')" >净土行动</li>
+            <li ng-class="{on:$route.current.originalPath=='/waste'}"  ng-click="switchNav(6,'waste' ,'Jtqf')" >清废行动</li>
+        </ul>
+    </div>
+</div>

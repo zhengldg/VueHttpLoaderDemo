@@ -1,0 +1,213 @@
+﻿@{
+    var xsbh = ViewBag.sxbh;
+    var id = ViewContext.RouteData.Values["id"];
+}
+@model Boanda.SystemConfiguration.Entity.T_ADMIN_XTGL_XTXH
+@*<div class="mini-fit">
+        <div class="gridToolbar clearfix">
+            <div class="edit-toolbar table-tools">
+                <button class="com-btn fr" onclick="SaveData()">保存</button>
+            </div>
+        </div>
+        <div id="editform" class="editform">
+            <table width="100%" class="item-c-table">
+                <tr>
+                    <td class="thd">前缀：</td>
+                    <td>
+                        <input value="@Model.QZ" id="QZ" name="QZ" maxlength="100" class="mini-textbox" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd">后缀：</td>
+                    <td>
+                        <input value="@Model.HZ" id="HZ" name="HZ" maxlength="100" class="mini-textbox" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd"><span style="color:red;">*</span>当前值：</td>
+                    <td>
+                        <input value="@Model.DQZ" id="DQZ" name="DQZ" maxlength="100" vtype="int" class="mini-textbox" required requirederrortext="当前值不能为空" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd"><span style="color:red;">*</span>最小值：</td>
+                    <td>
+                        <input value="@Model.ZXZ" id="ZXZ" name="ZXZ" maxlength="15" vtype="int" class="mini-textbox" required requirederrortext="最小值不能为空" onValidation="onMinValueValidation" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd"><span style="color:red;">*</span>最大值：</td>
+                    <td>
+                        <input value="@Model.ZDZ" id="ZDZ" name="ZDZ" maxlength="15" vtype="int" class="mini-textbox" required requirederrortext="最大值不能为空" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thd">备注：</td>
+                    <td>
+                        <input value="@Model.BZ" id="BZ" name="BZ" maxlength="300" class="mini-textarea" style="height:60px;" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>*@
+
+<div class="layui-fluid layui-form" ng-controller="indexCtrl as vm" ng-cloak>
+    <div class="grid-infor">
+        <table>
+            <tr>
+                <td>
+                    <input type="hidden" ng-model="vm.entity.XH" />
+                    前缀
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.QZ" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    后缀
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.HZ" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    当前值
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.DQZ" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    最小值
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.ZXZ" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    最大值
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.ZDZ" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    备注
+                </td>
+                <td>
+                    <input type="text" ng-model="vm.entity.BZ" placeholder="请输入" autocomplete="off" class="layui-input" maxlength="50">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="foot-btnp">
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-filter="form1" lay-submit>保存</button>
+    <button class="layui-btn   layui-btn-sm layui-btn-primary" onclick="parent.layer.closeAll()">取消</button>
+</div>
+@section script
+{
+<script>
+        var id = '@id';
+        console.log(id);
+        angular.module("app.ydyd")
+            .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", function ($scope, pdActionSvr, pdResourceSvr) {
+                var edit = id == "" ? false : true;
+                var addOrEditUrl = '@Url.Action("AddOrEditSystemNum")?edit=' + edit;
+
+                var vm = this;
+                vm.entity = { };
+                vm.filter = { sortfield: 'xh', KEY: '' };
+                vm.save = function () {
+                    pdResourceSvr.post(addOrEditUrl, vm.entity)
+                        .then(function (rsp) {
+                            if (rsp.Result) {
+                                pdActionSvr.success('保存成功', '提示');
+                                vm.isEdit = true;
+                            } else {
+                                pdActionSvr.error(rsp.message || '保存失败');
+                            }
+                        });
+                }
+
+                vm.init = function () {
+                        vm.isEdit = true;
+                        pdResourceSvr.get('@Url.Action("GetSerial")?id=' + id + "&sxbh=@xsbh")
+                            .then(function (rsp) {
+                                console.log(rsp);
+                                vm.entity = rsp || {};
+                            });
+                }
+
+                vm.init();
+
+                //监听提交
+                layui.form.on('submit(form1)', function (data) {
+                    vm.save();
+                });
+
+            }]);
+
+
+        @*mini.parse();
+        var form = new mini.Form("editform");
+        mini.get('DQZ').focus();
+        function SaveData() {
+            debugger;
+            if (!mini.validateForm(form)) return false;
+            var formData = form.getData();
+            if (mini.get('DQZ').value < mini.get('ZXZ').value || mini.get('DQZ').value > mini.get('ZDZ').value) {
+                $$.message.error("当前值应在最小值和最大值之间");
+                return;
+            }
+            var url = "";
+            //修改
+            if ('@Model.XH') {
+                formData.XH = '@Model.XH';
+                url = '@Url.Action("AddOrEditSystemNum")?edit=true';
+            } else {
+                url = '@Url.Action("AddOrEditSystemNum")?edit=false';
+            }
+            formData.BHLX = '0';
+            formData.SXBH = '@Model.SXBH';
+            formData.ORGID = '@Model.ORGID';
+            $$.ui.setBusy(null,
+                $$.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: JSON.stringify(formData)
+                }).done(function (data) {
+                    if (data.Result == "1") {
+                        $$.notify.success("保存成功！");
+                    }
+                    else
+                        $$.notify.error("保存失败!");
+                })
+                    .always(function () {
+                        $$.ui.clearBusy(null);
+                    })
+            )
+        }
+
+        function onMinValueValidation(e) {
+            if (!e.value) return true;
+            debugger;
+            if (e.isValid) {
+                if (e.value >= mini.get("ZDZ").value) {
+                    e.errorText = "最小值必须小于最大值";
+                    e.isValid = false;
+                }
+            }
+
+        }*@
+</script>
+    <script type="text/html" id="eventBar">
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+}

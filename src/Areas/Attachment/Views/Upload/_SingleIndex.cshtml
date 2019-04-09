@@ -1,0 +1,72 @@
+﻿@model Boanda.Attachment.Entity.T_COMN_FJML
+
+@{
+    string FLX = Model.MLID;
+    string ZLX = Model.MLID;
+    string MLMC = Model.MLMC;
+
+    string GLBH = ViewData["GLBH"] + "";
+    bool isEdit = "1".Equals(ViewData["isEdit"] + "");
+    var downloadUrl = Boanda.Core.Config.ATTACHMENT_DOWNLOAD_URL;
+    if (string.IsNullOrWhiteSpace(downloadUrl))
+    {
+        downloadUrl = Request.ApplicationPath.TrimEnd('/');
+    }
+}
+
+<link type="text/css" rel="stylesheet" href="~/Resources/Components/jQueryFileUpload/css/jquery.fileupload.css" />
+
+<script type="text/x-handlebars-template" id="fj-item">
+    <li>
+        <table class="table-fjgl" cellpadding="0" cellspacing="0">
+            <colgroup>
+                <col style="width:40%" />
+                <col style="width:15%" />
+                <col style="width:15%" />
+                <col style="width:15%" />
+                <col style="width:15%" />
+            </colgroup>
+            <tbody>
+                <tr id="{{XH}}">
+                    <td><a href="@(downloadUrl)/Fjgl/Upload/Download?id={{XH}}" class="{{wjlx }}">{{FJMC}}</a></td>
+                    <td>{{mb FJDX}}</td>
+                    <td>{{CJR}}</td>
+                    <td>{{date CJSJ}}</td>
+                    @*<td>{{CJR}}</td>*@
+                    <td>
+                        <i class="icon icon-download" title="下载附件" onclick="window.location.assign('@(downloadUrl)/Attachment/Upload/Download?id={{XH}}')"></i>
+                        @{
+                            if (isEdit)
+                            {
+                                <i class="icon icon-trash" title="删除附件" onclick="delFj('{{XH}}')"></i>
+                            }
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </li>
+</script>
+
+<ul class="directive-list" id="fj-body">
+    <li style="position:relative;">
+        <h4 class="directive-tit  up-parent">
+            <p class="warning">@MLMC</p>
+            <label class="num">0个附件</label>
+            @{
+                if (isEdit)
+                {
+                    <span class="com-btn fileinput-button fr">
+                        <span>选择文件</span>
+                        <input id="fileupload" data-flx="@FLX" data-zlx="@ZLX"
+                               class="fileupload" type="file" name="files[]" multiple onchange="$('.directive-tit .up-parent p').val(this.value)">
+                    </span>
+                }
+                <input type="hidden" class="data" data-flx="@FLX" data-zlx="@ZLX" />
+}
+        </h4>
+        <ul class="subDir-list" id="subDir-list-@FLX-@ZLX"></ul>
+    </li>
+</ul>
+
+

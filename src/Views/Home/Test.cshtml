@@ -1,0 +1,81 @@
+﻿@{
+}
+<div id="app" v-cloak>
+    <router-link to="/foo">Go to Foo</router-link>
+    <router-link to="/foo2">Go to Foo2</router-link>
+    <router-view></router-view>
+</div>
+
+@section script{
+    <script>
+
+        var webRequest = function (url) {
+            return new Promise(function (resolve, reject) {
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+
+                xhr.onreadystatechange = function () {
+
+                    if (xhr.readyState === 4) {
+
+                        if (xhr.status >= 200 && xhr.status < 300)
+                            resolve(xhr.responseText);
+                        else
+                            reject(xhr.status);
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        function loadComponent(url, data) {
+            return function () {
+                var c = webRequest(url)
+                    .then(function (tpl) {
+                        var com =    {
+                            template: tpl,
+                            data: function () {
+                                return data;
+                            }
+                        };
+                        return com;
+                    });
+                return c;
+            };
+        }
+        var foo = function () {
+            return loadComponent('test.html', {content: 'page foo'});
+        }
+        var foo2 = function () {
+            return loadComponent('test.html', { content: 'page foo22222222222222222222222' });
+        }
+
+        var router = new VueRouter({
+            routes: [
+                { path: '/foo', component: foo() },
+                { path: '/foo2', component: foo2() }
+            ]
+        })
+        var app = new Vue({
+            router: router,
+            data: {
+                content: 'hello',
+            },
+            created: function () {
+            },
+            mounted: function () {
+            },
+            computed: {
+            },
+            watch: {
+            },
+            methods: {
+            },
+            filters: {
+            }
+        }).$mount('#app')
+    </script>
+    
+    }

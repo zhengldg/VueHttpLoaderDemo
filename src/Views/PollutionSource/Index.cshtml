@@ -1,0 +1,171 @@
+﻿@section style{
+}
+
+    <div class="con-left">
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">污染源概况</b>
+            </div>
+            <div class="block-bd">
+                <div id="wryChart" style="width:480px; height:170px;"></div>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">建设项目审批情况</b>
+            </div>
+            <div class="block-bd">
+                <p class="detail-info">全年1-@(DateTime.Now.Month)月共审批项目<b ng-bind="Xmsp.ZG"></b><b></b></p>
+                <ul class="ul-6">
+                    <li>
+                        <span style="color: #fe9834;" ng-bind-template="{{Xmsp.BGB}}个"></span>
+                        <p>报告表</p>
+                    </li>
+                    <li>
+                        <span style="color: #ffea00;" ng-bind-template="{{Xmsp.BGS}}个"></span>
+                        <p>报告书</p>
+                    </li>
+                    <li>
+                        <span style="color: #7fcb1d;" ng-bind-template="{{Xmsp.DJB}}个"></span>
+                        <p>登记表</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">应急指挥管理</b>
+            </div>
+            <div class="block-bd">
+                <table class="table-2">
+                    <tr>
+                        <td>
+                            <div class="yjzh-1">
+                                <p>敏感源总数</p>
+                                <b ng-bind-template="{{Hjyj.MGY}}家"></b>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="yjzh-2">
+                                <p>风险源总数</p>
+                                <b ng-bind-template="{{Hjyj.FXYZS}}家"></b>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="yjzh-3">
+                                <p>应急物资</p>
+                                <b ng-bind-template="{{Hjyj.YJWZ}}件"></b>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="yjzh-4">
+                                <p>应急装备</p>
+                                <b ng-bind-template="{{Hjyj.YJZB}}件"></b>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="con-right">
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">信访投诉情况</b>
+            </div>
+            <div class="block-bd">
+                <div id="hjxfChart" style="width:480px; height:170px;"></div>
+                @*<div class="chart-7">4900家</div>
+                    <div style="position: absolute; left: 230px; top: 0;">
+                        <p class="detail-info">全年1-9月信访总量共  <b>1350件</b></p>
+                        <img src="~/Resources/Skins/default/images/tuli_7.png" alt="" class="tuli-7">
+                    </div>*@
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">监察执法情况</b>
+            </div>
+            <div class="block-bd" style="margin: 0;">
+                @*<p class="detail-info" style="margin-left: 10px;">全年1-9月信访总量共 <b>1350件</b></p>*@
+                <ul class="ul-7">
+                    <li>
+                        <img src="~/Resources/Skins/default/images/icon_jczf_1.png" alt="">
+                        <p>执法总数</p>
+                        <b ng-bind-template="{{Jczf.ZFZS}}次"></b>
+                    </li>
+                    <li>
+                        <img src="~/Resources/Skins/default/images/icon_jczf_2.png" alt="">
+                        <p>执法人员</p>
+                        <b ng-bind-template="{{Jczf.JCRSL}}人次"></b>
+                    </li>
+                    <li>
+                        <img src="~/Resources/Skins/default/images/icon_jczf_3.png" alt="">
+                        <p>检查企业</p>
+                        <b ng-bind-template="{{Jczf.QYSL}}家"></b>
+                    </li>
+                    <li>
+                        <img src="~/Resources/Skins/default/images/icon_jczf_4.png" alt="">
+                        <p>完成笔录</p>
+                        <b ng-bind-template="{{Jczf.BLSL}}份"></b>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">行政处罚情况</b>
+            </div>
+            <div class="block-bd">
+                <table class="table-2">
+                    <tr>
+                        <td>
+                            <div class="xzcf-1">
+                                <p style="line-height:35px;">立案 <b>219个</b></p>
+                                <p style="line-height:35px;">处罚 <b>1691.566万元</b></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="xzcf-2">
+                                <p >按日连续处罚 </p><b>0个</b>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="xzcf-3">
+                                <p style="line-height:35px;">查封、扣押<b>27个</b></p>
+                                <p style="line-height:35px;">限产、停产 <b>19个</b></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="xzcf-4">
+                                <p style="line-height:35px;">移送拘留<b>20个</b></p>
+                                <p style="line-height:35px;">移送公安 <b>7个</b></p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+@section script
+    {
+    <script src="~/App/page/pullutionSource/index.js"></script>
+    <script>
+        function ifLoaded() {
+            console.log(document.getElementById("iframe").contentWindow);
+            setTimeout(function () {
+                document.getElementById("iframe").contentWindow.ChangeModel('Wry');
+            },1000)
+        }
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-language" content="zh-CN" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>杭州市生态环境数据平台</title>
+    <base href="~/" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    @Html.Partial("_Layout.Style")
+    @RenderSection("style", false)
+</head>
+<body  class="BG">
+    @RenderBody()
+    @Html.Partial("_Layout.Script")
+    @RenderSection("script", false)
+</body>
+</html>

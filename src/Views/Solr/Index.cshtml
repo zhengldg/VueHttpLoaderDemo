@@ -1,0 +1,256 @@
+﻿
+@{
+    ViewBag.Title = "全文检索";
+    Layout = "~/Views/Shared/_SorlLayout.cshtml";
+}
+
+
+@using Boanda.Search.Solr.Helpers
+@using Boanda.Search.Solr.Models
+@using SolrNet
+@model SearchDataView
+<script type="text/javascript">
+    function doView(url, title) {
+        if (url && title) {
+            url = '@Request.ApplicationPath.TrimEnd('/')' + url;
+            mini.open({
+                url: url,
+                title: title, width: 950, height: 550,
+                ondestroy: function (action) {
+                }
+            });
+        }
+    }
+</script>
+<form method="get" action="@Url.Action("Index")">
+
+    <div style="width:100%;text-align:center">
+        关键词： @Html.TextBox("q", Model.Search.FreeSearch, new { @class = "query-text", @value = "输入关键字" })
+        <input type="submit" value="搜索" class="btn btnQuery" />
+        @if (!string.IsNullOrEmpty(Model.DidYouMean))
+        {
+            <div>你想要的<strong><em><a href="@Url.ForQuery(Model.DidYouMean)">@Model.DidYouMean</a></em></strong></div>
+        }
+        @if (Model.QueryError)
+        {
+            <span class="error">无效查询</span>
+        }
+    </div>
+    <hr />
+</form>
+<div class="leftColumn">
+    @foreach (var f in Model.Search.Facets)
+    {
+        <ul>
+            <li>
+                @(Html.SolrFieldPropName<SearchData>(f.Key))
+                <ul>
+                    <li><a class="removeFacet" href="@Url.RemoveFacet(f.Key)">@f.Value</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+    <ul>
+        @foreach (var f in Model.Facets)
+        {
+            <li>
+                @(Html.SolrFieldPropName<SearchData>(f.Key))
+                <ul>
+                    @{
+                        var count = 0;
+                        foreach (var fv in f.Value)
+                        {
+                            count++;
+                            if (count > 20)
+                            {
+                                <li lihide style="display:none">
+                                    @if (fv.Key.Length > 10)
+                        {
+                                        <a href="@Url.SetFacet(f.Key, fv.Key)" title="@fv.Key">@fv.Key.Substring(0, 7) ...</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.SetFacet(f.Key, fv.Key)" title="@fv.Key">@fv.Key</a>
+                                    }
+                                    <span>(@fv.Value)</span>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    @if (fv.Key.Length > 10)
+                        {
+                                        <a href="@Url.SetFacet(f.Key, fv.Key)" title="@fv.Key">@fv.Key.Substring(0, 7) ...</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.SetFacet(f.Key, fv.Key)" title="@fv.Key">@fv.Key</a>
+                                    }
+                                    <span>(@fv.Value)</span>
+                                </li>
+                            }
+                        }
+                        if (count > 20)
+                        {
+                            <a href="javascript:void(0)" onclick='$("[liHide]").show(); $(this).hide();' style="cursor:pointer;text-decoration:none;">更多...</a>
+                        }
+                    }
+                </ul>
+            </li>
+                        }
+
+    </ul>
+</div>
+<div class="rightColumn">
+    <div>
+        排序:
+        @if (string.IsNullOrEmpty(Model.Search.Sort))
+        {
+            <strong>默认</strong>
+        }
+        else
+        {
+            <a href="@Url.RemoveParameters("sort")">默认</a>
+        }
+        |
+        @if (Model.Search.Sort == "pd_Title")
+        {
+            <strong>标题</strong>
+        }
+        else
+        {
+            <a href="@Url.SetParameter("sort", "pd_Title")">标题</a>
+        }
+        |
+        @if (Model.Search.Sort.NotNullAnd(s => s.StartsWith("pd_DateTime")))
+        {
+            <strong>时间</strong>
+        }
+        else
+        {
+            <a href="@Url.SetParameter("sort", "pd_DateTime" )">时间</a>
+        }
+        @*( @if (Model.Search.SortParam == "asc")
+            {
+                <strong>升序</strong>
+                <a href="@Url.SetParameter("sortparam", "desc")">降序</a>
+            }
+            else
+            {
+                <a href="@Url.SetParameter("sortparam", "asc")">升序</a>
+                <strong>降序</strong>
+            })*@
+    </div>
+    @foreach (var p in Model.SearchDatas)
+    {
+        <div class="bd-box ctn-box">
+            <dl class="fl-ctn">
+
+                <dt>
+                    <a href="javascript:void(0)" onclick='doView("@(p.Url==null?"":p.Url.TrimStart('.').Replace('$','&'))", "@p.Title")'>
+
+                        @if (!(Model.Highlighting == null || !Model.Highlighting.ContainsKey(p.Id)))
+                        {
+                            var hlkeys = Model.Highlighting[p.Id] as List<string>;
+                            hlkeys.Sort((Comparison<string>)delegate (string a1, string b1) { return b1.Length.CompareTo(a1.Length); });
+                            foreach (var item in hlkeys)
+                            {
+                                p.Title = p.Title.Replace(item, string.Format("<font style='font-weight:bold;color:Red;'>{0}</font>", item));
+                            }
+                        }
+                        @(new HtmlString(@p.Title))
+                    </a>
+                </dt>
+                <dd>
+                    @foreach (string b in p.Contents)
+                    {
+                        var content = b;
+                        <span>
+                            @if (!(Model.Highlighting == null || !Model.Highlighting.ContainsKey(p.Id)))
+                            {
+                                var hlkeys = Model.Highlighting[p.Id] as List<string>;
+                                hlkeys.Sort((Comparison<string>)delegate (string a1, string b1) { return b1.Length.CompareTo(a1.Length); });
+                                foreach (var item in hlkeys)
+                                {
+                                    content = content.Replace(item, string.Format("<font style='font-weight:bold;color:Red;'>{0}</font>", item));
+                                }
+                            }
+                            @(new HtmlString(@content))
+                        </span>}
+                </dd>
+                <dd>
+                    <span style="color:green">@p.Categories.FirstOrDefault() @p.DateTime</span>
+                </dd>
+                @*<a href="@p.Url" class="fr-dtl" target="_blank">查看详情</a>*@
+            </dl>
+        </div>
+        <div class="gap"></div>
+    }
+
+
+    @{
+        PaginationInfo paginationInfo = new PaginationInfo
+        {
+            PageUrl = Url.SetParameter("page", "!0"),
+            CurrentPage = Model.Search.PageIndex,
+            PageSize = Model.Search.PageSize,
+            TotalItemCount = Model.TotalCount,
+        };
+    }
+
+    <div>
+        Results @paginationInfo.FirstItemIndex  - @paginationInfo.LastItemIndex of <b>@paginationInfo.TotalItemCount</b>
+    </div>
+    <div class="pagination">
+        @if (paginationInfo.HasPrevPage)
+        {
+            <a href="@paginationInfo.PrevPageUrl  ">&laquo; 上一页</a>
+        }
+        else
+        {
+            <span class="disabledPage">&laquo; 上一页</span>
+        }
+
+        @foreach (var p in paginationInfo.Pages)
+        {
+            if (p == paginationInfo.CurrentPage)
+            {
+                <span class="currentPage">@p</span>
+            }
+            else
+            {
+                <a href="@paginationInfo.PageUrlFor(p) ">@p</a>
+            }
+        }
+
+        @if (paginationInfo.HasNextPage)
+        {
+            <a href="@paginationInfo.NextPageUrl">下一页 &raquo;</a>
+        }
+        else
+        {
+            <span class="disabledPage">下一页 &raquo;</span>
+        }
+    </div>
+
+    <div class="pagesize">
+        @{
+            var _pageList = new[] { 5, 10, 20 };
+            foreach (var ps in _pageList)
+            {
+                if (ps == Model.Search.PageSize)
+                {
+                    @Html.Raw("<span>" + ps + "</span>");
+                }
+                else
+                {
+                    @Html.Raw("<a href=" + Url.SetParameters(new { pagesize = ps, page = 1 }) + ">" + ps + "</a>");
+                }
+                @Html.Raw("|");
+            }
+        }
+        每页条数
+    </div>
+</div>
+
+

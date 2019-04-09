@@ -1,0 +1,156 @@
+﻿@model Boanda.Web.Areas.Attachment.Models.MulitAttachmentDirModel
+@{
+    string GLBH = ViewData["GLBH"] + "";
+    bool isEdit = "1".Equals(ViewData["isEdit"] + "");
+    var downloadUrl = Boanda.Core.Config.ATTACHMENT_DOWNLOAD_URL;
+    if (string.IsNullOrWhiteSpace(downloadUrl))
+    {
+        downloadUrl = Request.ApplicationPath.TrimEnd('/');
+    }
+}
+
+@section style{
+    <link type="text/css" rel="stylesheet" href="~/Resources/Components/jQueryFileUpload/css/jquery.fileupload.css" />
+    <style type="text/css">
+        .progress-wrap{
+            width:500px;
+            height:5px;
+        }
+
+        .progress-wrap .progress{
+            background:#336699;
+            height:100%;
+        }
+    </style>
+}
+
+<script type="text/x-handlebars-template" id="fj-item">
+    <li>
+        <table class="table-fjgl" cellpadding="0" cellspacing="0">
+            <colgroup>
+                <col style="width:40%" />
+                <col style="width:15%" />
+                <col style="width:15%" />
+                <col style="width:15%" />
+                <col style="width:15%" />
+            </colgroup>
+            <tbody>
+                <tr id="{{XH}}">
+                    <td><a href="@(downloadUrl)/Fjgl/Upload/Download?id={{XH}}" class="{{wjlx }}">{{FJMC}}</a></td>
+                    <td>{{mb FJDX}}</td>
+                    <td>{{CJR}}</td>
+                    <td>{{date CJSJ}}</td>
+                    @*<td>{{CJR}}</td>*@
+                    <td>
+                        <i class="icon icon-download" title="下载附件" onclick="window.location.assign('@(downloadUrl)/Attachment/Upload/Download?id={{XH}}')"></i>
+                        @{
+                            if (isEdit)
+                            {
+                                <i class="icon icon-trash" title="删除附件" onclick="delFj('{{XH}}')"></i>
+                            }
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </li>
+</script>
+
+<div class="page-attachment">
+    @{
+        var isFirst = true;
+        foreach (var top in Model.MulitList)
+        {
+            if (isFirst)
+            {
+                <div class="hd">
+                    <h2>@top.MLMC</h2>
+                </div>
+            }
+
+            <div class="bd" id="fjListBody">
+                @if (top.Children != null)
+                {
+                    foreach (var item in top.Children)
+                    {
+                        if (item.Children.Count() == 0)
+                        {
+                            continue;
+                        }
+                        <div class="dg-popToolsbar">
+                            <h5>@item.MLMC</h5>
+                        </div>
+                        <div style="padding: 0 10px;">
+                            <ul class="directive-list">
+
+                                @if (item.Children != null)
+                                {
+                                    foreach (var subMl in item.Children)
+                                    {
+                                        <li style="position:relative;">
+                                            <h4 class="directive-tit  up-parent">
+                                                <p class="warning">@subMl.MLMC</p>
+                                                <label class="num">--个附件</label>
+                                                @*<i></i>*@
+                                                @{
+                                        if (isEdit)
+                                        {
+                                            <span class="com-btn fileinput-button fr">
+                                                <span>选择文件</span>
+                                                <input id="fileupload" data-flx="@item.MLID" data-zlx="@subMl.MLID"
+                                                       class="fileupload" type="file" name="files[]" multiple>
+                                            </span>
+                                        }
+                                        <input type="hidden" class="data" data-flx="@item.MLID" data-zlx="@subMl.MLID" />
+                                                }
+                                            </h4>
+                                            <ul class="subDir-list" id="subDir-list-@item.MLID-@subMl.MLID"></ul>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    }
+                }
+            </div>
+
+                isFirst = false;
+        }
+
+        foreach (var item in Model.SingleList)
+        {
+            <div class="bd" id="fjListBody">
+                <div class="dg-popToolsbar">
+                    <h5>@item.MLMC</h5>
+                </div>
+                <div style="padding: 0 10px;">
+                    <ul class="directive-list">
+                        <li style="position:relative;">
+                            <h4 class="directive-tit  up-parent">
+                                <p class="warning">@item.MLMC</p>
+                                <label class="num">--个附件</label>
+                                @{
+            if (isEdit)
+            {
+                <span class="com-btn fileinput-button fr">
+                    <span>选择文件</span>
+                    <input id="fileupload" data-flx="@item.MLID" data-zlx="@item.MLID"
+                           class="fileupload" type="file" name="files[]" multiple>
+                </span>
+            }
+                                }
+                                <input type="hidden" class="data" data-flx="@item.MLID" data-zlx="@item.MLID" />
+                            </h4>
+                            <ul class="subDir-list" id="subDir-list-@item.MLID-@item.MLID"></ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section script
+{
+    @Html.Partial("_UploadScript")
+}

@@ -1,0 +1,35 @@
+﻿<div class="layui-upload  dw-table">
+    <div class="layui-upload-list">
+        <table class="layui-table" style="table-layout:fixed;">
+            <colgroup>
+                <col style="width:32%" />
+                <col style="width:68%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th style="text-align:center">附件类型 </th>
+                    <th style="text-align:center">
+                        附件列表
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in dirData.Children">
+                    <td>
+                        <span ng-bind="item.MLMC"> </span> <span class="layui-badge layui-bg-gray" ng-bind="dirListData[item.MLID].length"></span>
+                        <button id="btn{{item.MLID}}" data-mlid="{{item.MLID}}" style="float:right;margin-left:10px; margin-right:10px ;padding:0 10px;" ng-show="editflag==1" type="button" class="layui-btn layui-btn-sm layui-btn-normal uploader-btn">选择文件</button>
+                    </td>
+                    <td>
+                        <div ng-repeat="file in dirListData[item.MLID]">
+                           {{$index + 1}},<a href="{{downloadUrl}}/{{file.XH}}" ng-bind="file.FJMC" style="margin-right:16px;overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap; width:70%;display:inline-block;height:22px; line-height:22px;vertical-align: middle;"></a>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" href="{{downloadUrl}}/{{file.XH}}">下载</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" ng-show="editflag" ng-click="delete(file)">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> 

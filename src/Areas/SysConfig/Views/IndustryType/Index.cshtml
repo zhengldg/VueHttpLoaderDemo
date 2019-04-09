@@ -1,0 +1,115 @@
+﻿@{
+}
+
+<div class="pd010" ng-controller="indexCtrl as vm">
+    <div class="layui-row" lay-filter="form1">
+        <div class="layui-form data-sethead">
+            <div class="layui-inline">
+                <input type="text" style="width:200px" placeholder="请输入行业类型名称\代码" class="layui-input" ng-model="vm.filter.Filter">
+            </div>
+            <button class="layui-btn layui-btn-sm layui-btn-green " ng-click="vm.searchTable()">搜索</button>
+            <button class="layui-btn layui-btn-sm layui-btn-normal" ng-click="vm.add()">新增</button>
+        </div>
+        <table id="grid" lay-filter="grid"></table>
+    </div>
+</div>
+
+@section script{
+    <script>
+        angular.module("app.rms")
+            .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", "pdTableSvr", function ($scope, pdActionSvr, pdResourceSvr, pdTableSvr) {
+
+                var url = '@Url.Action("GetPage")';
+                var winUrl = '@Url.Action("AddOrEdit")';
+                var table = {};
+                var vm = this;
+                vm.filter = { sortfield: 'HYLXDM', Filter: '' };
+
+                vm.init = function () {
+                    table = pdTableSvr.render({
+                        elem: '#grid',
+                        url: url,
+                        where: vm.filter,
+                        cols: [[
+                            { type: 'numbers', title: '序号', width: '5%' },
+                            { field: 'HYLXDM', title: '行业类型代码', width: '15%', sort: true, align: 'center', style: $$.styles.al },
+                            { field: 'HYLX', title: '行业类型名称', width: '20%', style: $$.styles.al },
+                            { field: 'HYML', title: '行业门类', width: '15%' },
+                            { field: 'HYJB', title: '行业级别', width: '15%' },
+                            { field: 'PXM', title: '排序号', width: '15%' },
+                            { title: '操作', fixed: 'right', toolbar: '#eventBar' }
+                        ]]
+                    });
+
+                    layui.table.on('tool(grid)', function (obj) {
+                        var xh = obj.data.HYLXDM;
+                        if (obj.event === 'detail') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '查看行业类型信息',
+                                content: '@Url.Action("Detail")' + '/' + xh
+                            });
+                        } else if (obj.event === 'edit') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '修改行业类型信息',
+                                content: winUrl + '/' + xh,
+                                end: function () {
+                                    reload();
+                                }
+                            });
+
+                        } else if (obj.event === 'del') {
+                            top.layer.confirm('确定删除么', function (index) {
+                                pdResourceSvr.post('@Url.Action("Delete")', { id: xh })
+                                    .then(function (rsp) {
+                                        if (rsp.Result) {
+                                            obj.del();
+                                            pdActionSvr.success('删除成功');
+                                        } else {
+                                            pdActionSvr.error('删除失败');
+                                        }
+                                    })
+                                    .finally(function () {
+                                        top.layer.close(index);
+                                    })
+                            });
+                        }
+                    });
+                }
+
+                vm.searchTable = function () {
+                    table.reload({
+                        where: vm.filter,
+                        page: true
+                    });
+                }
+
+                vm.add = function () {
+                    vm.entity = { XH: '' };
+                    top.layer.open({
+                        type: 2,
+                        area: $$.configs.winArea,
+                        title: '新增行业类型信息',
+                        content: winUrl,
+                        end: function () {
+                            reload();
+                        }
+                    });
+                }
+
+                reload = function () {
+                    table.reload()
+                }
+
+                vm.init();
+            }]);
+    </script>
+    <script type="text/html" id="eventBar">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+}

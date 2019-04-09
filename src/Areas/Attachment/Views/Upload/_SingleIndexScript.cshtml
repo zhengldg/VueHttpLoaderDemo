@@ -1,0 +1,162 @@
+﻿@model Boanda.Attachment.Entity.T_COMN_FJML
+
+@{
+    string GLBH = ViewBag.GLBH;
+    string FLX = Model.MLID;
+    string ZLX = Model.MLID;
+    string MLMC = Model.MLMC;
+    bool isEdit = ViewBag.isEdit == "1";
+    string fileSize = System.Web.Configuration.WebConfigurationManager.AppSettings["FileSize"];
+}
+
+<script src="~/Resources/Components/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+<script src="~/Resources/Components/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+<script src="~/Resources/Components/jQueryFileUpload/js/jquery.fileupload.js"></script>
+
+
+<script>
+    if ('@isEdit' === '@bool.TrueString') {
+        renderControols();
+    }
+
+    // 允许上传的文件类型
+    var allowFileTypes = '*.gif; *.txt; *.jpg; *.bmp; *.png; *.mp3; *.xls; *.doc; *.pdf; *.rar; *.zip; *.xlsx; *.docx;';
+    // 附件文件拼接html模板
+    var fjItemTpl = Handlebars.compile($("#fj-item").html());
+    var MAX_SIZE = '@fileSize'; // MB单位
+
+    // 格式化 时间
+    Handlebars.registerHelper('date', function (date) {
+        return moment(date).normalDate();
+    });
+
+    // 格式化 附件大小 单位换算
+    Handlebars.registerHelper('mb', function (dx) {
+        if (dx && !isNaN(dx)) {
+            if (dx < 1024) {
+                return dx + ' B';
+            }
+            else if (dx < 1024 * 1024) {
+                return Math.ceil((dx / 1024)) + ' KB';
+            } else {
+                return Math.ceil(dx / 1024 / 1024) + ' MB';
+            }
+        }
+    });
+
+    // 文件类型
+    Handlebars.registerHelper('wjlx', function (item) {
+        var data = item.data.root;
+        var wjlx = '';
+        // 先用 HZM字段判断，如果该字段没值，用 FJMC的后缀判断，如果都是无效值，设置为 unknown
+        if (data) {
+            if (item.HZM) {
+                wjlx = data.HZM.replace('.');
+            } else {
+                if (data.FJMC) {
+                    wjlx = data.FJMC.substr(data.FJMC.lastIndexOf('.') + 1);
+                }
+            }
+        }
+
+        if (!wjlx || allowFileTypes.indexOf('.' + wjlx) < 0) {
+            wjlx = 'unknown';
+        }
+        return wjlx.toLowerCase();
+    });
+
+    // 删除附件
+    function delFj(id) {
+        if (id) {
+            top.mini.confirm("确定删除该附件？", "提示", function (action) {
+                if (action == "ok") {
+                    $$.ui.setBusy(null,
+                        $.ajax({
+                            url: '@Url.Action("Delete")',
+                            data: { id: id },
+                            type: 'POST'
+                        }).done(function (data) {
+                            if (data.isSuccess) {
+                                $$.notify.success("删除成功！");
+                                var obj = data.data;
+                                updateFjList(obj.FLX, obj.ZLX);
+                                $('#' + id).remove();
+
+                                deleteFjSuccess && deleteFjSuccess();
+                            }
+                            else $$.notify.error("删除失败");
+                        })
+                        .always(function () {
+                            //$$.ui.clearBusy(null);
+                        })
+                    );
+                }
+            })
+        }
+    }
+
+    // 页面首次加载时更新全部分类下面的附件列表
+    $('input.data').each(function (idx, ele) {
+        var data = $(ele).data();
+        updateFjList(data.flx, data.zlx);
+    });
+
+    // 为页面上所有的上传按钮绑定上传事件
+    function renderControols() {
+        $('.fileupload').fileupload({
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|mp3|xls|doc|docx|pdf|rar|zip|xlsx)$/i,
+            maxFileSize: @fileSize * 1024 * 1024,
+            url: '@Url.Action("UploadFile")',
+            dataType: 'text',
+            messages: {
+                maxFileSize: '文件大小不允许超过 ' + @fileSize + 'MB',
+                acceptFileTypes: '请上传 *.gif;*.txt;*.jpg;*.bmp;*.png;*.mp3;*.xls;*.doc;*.pdf;*.rar;*.zip;*.xlsx;*.docx;格式文件'
+            },processfail: function (e, data) {
+                var currentFile = data.files[data.index];
+                if (data.files.error && currentFile.error) {
+                    $$.notify.error(currentFile.error);
+                }
+            },
+            done: function (e, data) {
+                var rs = JSON.parse(data.result);
+                if (rs && rs.isSuccess) {
+                    $$.notify.success(rs.message);
+                    var obj = $(this).data();
+                    updateFjList(obj.flx, obj.zlx);
+
+                    uploadSuccess && uploadSuccess();
+                }
+            },
+            progressall: function (e, data) {
+                //var progress = parseInt(data.loaded / data.total * 100, 10);
+                //$('#progress .progress-bar').css(
+                //    'width',
+                //    progress + '%'
+                //);
+            }
+        }).bind('fileuploadsubmit', function (e, data) {
+            var obj = $(this).data();
+            data.formData = { FLX: obj.flx, ZLX: obj.zlx, GLBH: '@GLBH' };
+        });
+    }
+
+    // 更新附件分类下面的附件列表
+    function updateFjList(flx, zlx) {
+        $.get('@Url.Action("GetAttachmentList")', { GLBH: '@GLBH', FLX: flx, ZLX: zlx }, function (d) {
+            var list = d.data || [];
+            var con = $('#subDir-list-' + flx + '-' + zlx).html('');
+            if (con) {
+                con.prev().find('label:first').text(list.length + '个附件');
+                for (var i = 0; i < list.length; i++) {
+                    con.append(fjItemTpl(list[i]));
+                }
+                if (list.length > 0) {
+                    con.prev('h4').addClass('active');
+                } else {
+                    con.prev('h4').removeClass('active');
+                }
+            }
+        });
+    }
+</script>
+

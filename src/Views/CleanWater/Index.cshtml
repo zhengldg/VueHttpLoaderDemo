@@ -1,0 +1,158 @@
+﻿@section style{
+}
+
+    <div class="con-left">
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">断面目标</b>
+            </div>
+            <div class="block-bd">
+                <div class="poly">
+                    <h4>国控</h4>
+                    <p class="detail-info">Ⅰ类水目标占比  <b style="color: #4cc3ff;">达到85.3%</b></p>
+                    <p class="detail-info">截止至今Ⅰ类水目标占比  <b ng-bind="getPercent(Dbs.G1, Dbs.ZG1)"></b> <i class="icon-confirm"></i></p>
+                </div>
+                <div class="poly">
+                    <h4>省控</h4>
+                    <p class="detail-info">Ⅲ类水目标占比  <b style="color: #4cc3ff;">达到95.6%</b></p>
+                    <p class="detail-info">截止至今Ⅲ类水目标占比   <b ng-bind="getPercent(Dbs.S3, Dbs.ZS3)"></b> <i class="icon-warnning"></i></p>
+                </div>
+            </div>
+        </div>
+        <div class="gap" style="height: 30px;"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">断面水质类别占比</b>
+            </div>
+            <div class="block-bd">
+                <p class="descri-info">
+                    全市共有监测断面<label ng-bind="Dbs.L1+Dbs.L2+Dbs.L3+Dbs.L4+Dbs.L1=5"></label>个，全年1-@(DateTime.Now.Month)月达到Ⅰ类有<label ng-bind="Dbs.L1"></label>个，
+                    Ⅱ类水<label ng-bind="Dbs.L2"></label>个，
+                    Ⅲ类水<label ng-bind="Dbs.L3"></label>个，
+                    Ⅳ类水<label ng-bind="Dbs.L4"></label>个，
+                    Ⅴ类水<label ng-bind="Dbs.L5"></label>个，
+                </p>
+                <div class="ul-5">
+                    <div class="dmsz-1">
+                        <div style="width:122px;height:122px;float:left" id="l1Chart"></div>
+                        <div style="width:122px;height:122px;float:left" id="l2Chart"></div>
+                        <div style="width:122px;height:122px;float:left" id="l3Chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">饮用水考核目标</b>
+            </div>
+            <div class="block-bd">
+                <div class="poly">
+                    <i class="icon-shuidi"></i>
+                    <p class="detail-info">Ⅰ类水目标占比  <b style="color: #4cc3ff;">达到85.3%</b></p>
+                    <p class="detail-info">截止至今Ⅰ类水目标占比  <b ng-bind-template="{{Yys.P1}}%"></b> <i class="icon-confirm"></i></p>
+                </div>
+                <p class="descri-info nobg">本月各区县饮用水达标率</p>
+                <div class="chart-wrap">
+                    <div id="yysDblChart" style="width:478px; height:206px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="con-right">
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">水质排名</b>
+            </div>
+            <div class="block-bd">
+                <div class="tab-panel">
+                    <span ng-if="rankingType==1">本年丽水水质全省排名  <b ng-bind-template="第{{airRanking.lishuiProvince.QNPM}}"></b></span>
+                    <span ng-if="rankingType==2">本年丽水水质全国排名  <b ng-bind-template="第{{airRanking.lishuiNational.QNPM}}"></b></span>
+                    <ul class="ul-2">
+                        <li ng-class="{on:rankingType==1}" ng-click="rankingType=1">全省排名(<label ng-bind-template="{{airRanking.lishuiProvince.PMND}}-{{airRanking.lishuiProvince.PMSJ}}"></label>)</li>
+                        <li ng-class="{on:rankingType==2}" ng-click="rankingType=2">全国排名(<label ng-bind-template="{{airRanking.lishuiNational.PMND}}-{{airRanking.lishuiNational.PMSJ}}"></label>)</li>
+                    </ul>
+                </div>
+                <table class="table-1">
+                    <thead>
+                        <tr>
+                            <td>行政区划</td>
+                            @*<td>水质指数</td>*@
+                            <td>全年排名</td>
+                            <td>本月排名</td>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="rankingType==1">
+                        <tr ng-repeat="item in airRanking.provinceAirRankingData">
+                            <td ng-bind="item.CDMC"></td>
+                            @*<td ng-bind="item.YZZ"></td>*@
+                            <td ng-bind="item.QNPM">@*<img src="~/Resources/Skins/default/images/icon_g1.png" alt="">*@</td>
+                            <td ng-bind="item.DYPM"></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="rankingType==2">
+                        <tr ng-repeat="item in airRanking.nationalAirRankingData">
+                            <td ng-bind="item.CDMC"></td>
+                            @*<td ng-bind="item.YZZ"></td>*@
+                            <td ng-bind="item.QNPM">@*<img src="~/Resources/Skins/default/images/icon_g1.png" alt="">*@</td>
+                            <td ng-bind="item.DYPM"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="block">
+            <div class="block-hd">
+                <b class="tit">涉水污染源监测</b>
+            </div>
+            <div class="block-bd">
+                <div class="chart-wrap">
+                    <div id="SswryjcChart" style="width:480px; height:171px;">
+                    </div>
+                </div>
+                <h4 class="wrfl">涉气污染源行业分类</h4>
+                <ul class="ul-3">
+                    <li class="z-1">
+                        <p>制造加工</p>
+                        <span>230家</span>
+                    </li>
+                    <li class="z-2">
+                        <p>制衣皮革</p>
+                        <span>200家</span>
+                    </li>
+                    <li class="z-3">
+                        <p>汽车喷涂</p>
+                        <span>210家</span>
+                    </li>
+                    <li class="z-4">
+                        <p>家具制造</p>
+                        <span>170家</span>
+                    </li>
+                    <li class="z-5">
+                        <p>石化</p>
+                        <span>200家</span>
+                    </li>
+                    <li class="z-6">
+                        <p>其他</p>
+                        <span>230家</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+@section script
+    {
+    <script src="~/Resources/Components/echarts/echarts-liquidfill.js"></script>
+    <script src="~/App/page/cleanWater/index.js"></script>
+
+    <script>
+        function ifLoaded() {
+            console.log(document.getElementById("iframe").contentWindow);
+            setTimeout(function () {
+                document.getElementById("iframe").contentWindow.ChangeModel('Water');
+            }, 1500)
+        }
+    </script>
+}

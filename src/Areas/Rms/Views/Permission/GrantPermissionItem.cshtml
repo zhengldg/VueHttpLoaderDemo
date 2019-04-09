@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "用户列表";
+}
+@section style{
+    <style type="text/css">
+        #right input[type=checkbox] {
+            margin: 3px 0 3px 5px;
+            vertical-align: middle;
+        }
+    </style>
+}
+<div class="pd010" ng-controller="indexCtrl as vm">
+    <div class="layui-row  layui-col-space10">
+        <div class="layui-col-md3 layui-form"  style="padding-top:15px;">
+            <dropdown-list id="SSXT" style="width:100%" url='@(Url.Action("GetSystemDropDownList","System"))' textField="name" valueField="id" ng-model="vm.search.SSXT" defaultFirst="true"></dropdown-list>
+            <ul id="tree" class="ztree" style="overflow-y:auto;"></ul>
+        </div>
+        <div class="layui-col-md9">
+            <div class="data-sethead fr">
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-filter="form1" ng-click="vm.save()">保存</button>
+            </div>
+            <div class="layui-row">
+                <div class="layui-col-md12" id="right">
+                    <div id="divRoot" style="background: #508dd0;color: #ffffff;font-weight: bold;line-height: 22px;height: 25px;border-bottom: 1px solid #365d86;">
+                        <input id="ckAll" type="checkbox" onchange="changeStatus(this)" /> 全选
+                    </div>
+                    <div id="divMenuTree"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script>
+        window.onload = window.onresize = function () {
+            $('#tree').height($(window).height() - 62);
+        }
+
+        angular.module("app.rms")
+            .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", "$rootScope", function ($scope, pdActionSvr, pdResourceSvr, $rootScope) {
+                var vm = this;
+
+                var $fr = $('#fr');
+
+                vm.search = {
+                    Name: "",
+                    JSBH: null,
+                    SSXT: ''
+                };
+
+                vm.treeSearch = null, table = {};
+                var allTreeNode = [];
+
+                $scope.$watch('vm.search.SSXT', function (newVal) {
+                    refreshIFrame();
+                })
+                //$scope.$watch('vm.search.JSBH', function (newVal) {
+                //    refreshIFrame();
+                //})
+
+                function refreshIFrame() {
+                    if (vm.search.SSXT) {
+                        pdResourceSvr.post('@Url.Action("GetAllPermissionItem", "Permission")', { systemId: vm.search.SSXT })
+                            .then(function (data) {
+                                $("#divMenuTree").html(data.menuTree);
+                                initMenuRoleTree();
+                            })
+                    } else {
+                        $("#divMenuTree").html("");
+                    }
+                }
+
+                function onClickTreeNode(event, treeId, treeNode) {
+                    vm.search.JSBH = treeNode.id;
+                }
+                var treeObj = {};
+                vm.initTree = function () {
+                    var isFirst = true;
+                    var setting = {
+                        async: {
+                            enable: true,
+                            url: '@Url.Action("GetRoleTree","Role")',
+                        },
+                        callback: {
+                            onClick: function (event, treeId, treeNode) {
+                                vm.search.JSBH = treeNode.id;
+                                refreshIFrame();
+                            },
+                            onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                                if (isFirst) {
+                                    var node = treeObj.getNodes();
+                                    if (node && node.length) {
+                                        node = node[0];
+                                        treeObj.selectNode(node);
+                                        onClickTreeNode(null, node.id, node);
+                                        isFirst = false;
+                                    }
+                                }
+                            }
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true,
+                                idKey: "id",
+                                pIdKey: "pId",
+                                rootPId: null
+                            }
+                        }
+                    };
+                    treeObj = $.fn.zTree.init($("#tree"), setting);
+                }
+
+                vm.searchTable = function () {
+                    table.reload({
+                        where: vm.search,
+                        page: true
+                    });
+                }
+
+                vm.init = function () {
+                    vm.initTree();
+                }
+
+                vm.init();
+
+                vm.save = function (json) {
+                    if (json == null || json.length == 0) {
+                        json = getJson();
+                    }
+
+                    if (!vm.search.JSBH) {
+                        pdActionSvr.error("请选择角色", 1000);
+                    }
+                    pdResourceSvr.post('@Url.Action("SavePermissionItems")', { items: json, roleId: vm.search.JSBH, systemId: vm.search.SSXT })
+                        .then(function (text) {
+                            if (text.Result) {
+                                pdActionSvr.success("保存成功！");
+                            } else {
+                                pdActionSvr.success("保存失败！");
+                            }
+                        })
+                }
+
+                getJson = function () {
+                    var checkList = '';
+                    $("#divMenuTree input").each(function () {
+                        if (this.checked) {
+                            if (checkList.length == 0) {
+                                checkList += "['" + $(this).attr("tid") + "'";
+                            } else {
+                                checkList += ",'" + $(this).attr("tid") + "'";
+                            }
+                        }
+                    });
+                    if (checkList.length > 0) {
+                        checkList += "]";
+                    }
+
+                    return checkList;
+                }
+
+                changeStatus = function (obj) {
+                    var isSelected = $(obj).is(':checked');
+                    $("#divMenuTree input").each(function () {
+                        this.checked = isSelected;
+                    });
+                }
+
+                initMenuRoleTree = function (jsxh) {
+                    pdResourceSvr.post('@Url.Action("GetPermissionItemTree")', { systemId: vm.search.SSXT, roleId: vm.search.JSBH })
+                        .then(function (data) {
+                            var dtItems = data; //转换为json对象
+                            $("input[nodeId]").each(function () {
+                                if ($(this).is(':checked')) {
+                                    $(this).removeAttr("checked");
+                                }
+                            });
+                            for (var i = 0; i < dtItems.length; i++) {
+                                $("input[tId=" + dtItems[i].XH + "]").attr("checked", true);
+                            }
+                            if (!(dtItems == null || dtItems.length == 0)) {
+                                $("#ckAll").removeAttr("checked");
+                            }
+                        })
+                }
+            }]);
+    </script>
+}

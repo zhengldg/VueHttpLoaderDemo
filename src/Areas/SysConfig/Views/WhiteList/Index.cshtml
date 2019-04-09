@@ -1,0 +1,283 @@
+﻿@{
+
+}
+<div class="pd010" ng-controller="indexCtrl as vm">
+    <div class="layui-row" lay-filter="form1">
+        <div class="layui-form data-sethead">
+            <div class="layui-inline">
+                <input type="text" style="width:200px" placeholder="请输入用户ID\用户名称" class="layui-input" ng-model="vm.search.YHID">
+            </div>
+            <div class="layui-inline">
+                <dropdown-list ng-disabled="true" id="SBLX" url="@Url.Action("GetGgdmz", "Tool", new { area = "", DMJBH = "SBLX" })" textField="text" valueField="id" ng-model="vm.search.SBLX"></dropdown-list>
+                <dropdown-list ng-disabled="true" id="SHZT" url="@Url.Action("GetGgdmz", "Tool", new { area = "", DMJBH = "SHZT" })" textField="id" valueField="id" ng-model="vm.search.SHZT"></dropdown-list>
+            </div>
+            <button class="layui-btn layui-btn-sm  layui-btn-green " ng-click="vm.searchTable()">搜索</button>
+            <button class="layui-btn  layui-btn-sm layui-btn-normal" ng-click="vm.add()">新增</button>
+        </div>
+        <table id="grid" lay-filter="grid"></table>
+    </div>
+</div>
+@section script
+{
+    <script type="text/javascript">
+          angular.module("app.rms")
+              .controller("indexCtrl", ["$scope", "pdActionSvr", "pdResourceSvr", "pdTableSvr", function ($scope, pdActionSvr, pdResourceSvr, pdTableSvr) {
+                var url = '@Url.Action("GetPage")';
+                var winUrl = '@Url.Action("AddOrEdit")';
+                var deleteUrl = '@Url.Action("Delete")';
+                var SHurl = '@Url.Action("UpdateSh")';
+                var table = {};
+                var vm = this;
+                vm.search = {
+                    KEY: "",
+                    SBLX: null,
+                    SBZT: null,
+                    sortfield: "CJSJ",
+                    sortorder:"DESC"
+                };
+                vm.init = function () {
+                    table = pdTableSvr.render({
+                        elem: '#grid',
+                        url: url,
+                        where: vm.search,
+                        cols: [[
+                            { type: 'numbers', title: '序号', width: '10%' },
+                            { field: 'YHID', title: '用户ID', width: '10%', align: 'center' },
+                            { field: 'YHM', title: '用户名', width: '20%'},
+                            { field: 'IMEI', title: '设备识别号', width: '20%' },
+                            { field: 'SBLX', title: '设备类型', width: '10%' },
+                            { field: 'SHZT_TEXT', title: '审核状态', width: '10%' },
+                            { title: '操作', fixed: 'right',  toolbar: '#eventBar' }
+                        ]],
+                        response: {
+                            statusName: 'isSuccess' //数据状态的字段名称，默认：code
+                            , statusCode: null      //成功的状态码，默认：0
+                            , msgName: 'message'    //状态信息的字段名称，默认：msg
+                            , countName: 'Total'    //数据总数的字段名称，默认：count
+                            , dataName: 'Items'     //数据列表的字段名称，默认：data
+                        }
+                    });
+
+
+                     layui.table.on('tool(grid)', function (obj) {
+                        var xh = obj.data.XH;
+                    if (obj.event === 'edit') {
+                            top.layer.open({
+                                type: 2,
+                                area: $$.configs.winArea,
+                                title: '编辑',
+                                content: winUrl + '/' +xh,
+                                end: function () {
+                                    reload();
+                                }
+                            });
+
+                    } else if (obj.event === 'SH') {
+                        top.layer.confirm('是否审核当前行?', function (index) {
+                            pdResourceSvr.post(deleteUrl, { id: xh })
+                                .then(function (rsp) {
+                                    if (rsp.Result) {
+                                        obj.del();
+                                        pdActionSvr.success('审核成功');
+                                    } else {
+                                        pdActionSvr.error('审核失败');
+                                    }
+                                })
+                                .finally(function () {
+                                    top.layer.close(index);
+                                })
+                        });
+
+                    } else if (obj.event === 'del') {
+                        top.layer.confirm('确定删除么', function (index) {
+                            pdResourceSvr.post(deleteUrl, { id: xh })
+                                .then(function (rsp) {
+                                    if (rsp.Result) {
+                                        obj.del();
+                                        pdActionSvr.success('删除成功');
+                                    } else {
+                                        pdActionSvr.error('删除失败');
+                                    }
+                                })
+                                .finally(function () {
+                                    top.layer.close(index);
+                                })
+                        });
+                    }
+                    });
+                }
+
+                vm.searchTable = function () {
+                    vm.search.KEY = $scope.vm.search.YHID;
+                    console.log(vm.search);
+                    table.reload({
+                        where: vm.search,
+                        page: true
+                    });
+                }
+                vm.add = function () {
+                    vm.entity = { XH: '' };
+                    top.layer.open({
+                        type: 2,
+                        area: $$.configs.winArea,
+                        title: '新增',
+                        content: winUrl,
+                        end: function () {
+                            reload();
+                        }
+                    });
+                }
+
+                reload = function () {
+                    table.reload()
+                }
+
+                vm.init();
+            }]);
+
+    </script>
+    <script type="text/html" id="eventBar">
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="SH">审核</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+
+
+
+    @*var SBLXList = [{ "id": "IOS", "text": "IOS设备" }, { "id": "Android", "text": "Android设备" }];
+        mini.parse();
+        var DataGrid = mini.get("DataGrid");
+        var SBLX = mini.get('SBLX');
+        var SHZT = mini.get('SHZT');
+        //搜索内容
+        function queryData() {
+        getListData();
+        };
+
+        function clearSearch() {
+        document.getElementById("txtKEY").value = ''
+        SBLX.setValue('');
+        SHZT.setValue('');
+        }
+
+        //列表取数据
+        function getListData(gridId) {
+        //设置过滤条件
+        var val = mini.get('txtKEY').value;
+
+        var params = {};
+        params.Key = val;
+        params.SBLX = SBLX.getValue();
+        params.SBZT = SHZT.getValue();
+        DataGrid.load(params, function () {
+        });
+        }
+
+        $(function () {
+        $("#txtKEY").keydown(function (event) {
+        if (event.keyCode == 13) {
+        queryData();
+        return false;
+        }
+        });
+        //重写Grid的drawcell
+        DataGrid.on("drawcell", function (e) {
+        var record = e.record,
+        column = e.column,
+        field = e.field,
+        value = e.value;
+        //action列，超连接操作按钮
+        if (column.name == "action") {
+        e.cellStyle = "text-align:center";
+        e.cellHtml = "";
+        e.cellHtml += '<a href="javascript:doEdit(\'' + record.XH + '\')">编辑</a>&nbsp;';
+        if (record.SHZT == 1) {
+        e.cellHtml += '<a href="javascript:doSH(\'' + record.XH + '\')">审核</a>&nbsp;';
+        }
+        e.cellHtml += '<a href="javascript:doDelete(\'' + record.XH + '\')">删除</a>&nbsp;';
+        }
+        else if (column.name == 'SHZT') {
+        if (record.SHZT == 2) {
+        e.cellHtml ='<span style="color:green">'+record.SHZT_TEXT+'</span>';
+        } else if (record.SHZT == 1) {
+        e.cellHtml = '<span style="color:orange">' + record.SHZT_TEXT + '</span>';
+        }
+        else {
+        e.cellHtml = '<span style="color:red">' + record.SHZT_TEXT + '</span>';
+        }
+        }
+        });
+        queryData();
+        });
+
+        function doAdd() {
+        var sUrl = '@Url.Action("AddOrEdit")';
+        var sTitle = "新增白名单用户";
+        var winParams = {};
+        $$.win.open(sUrl, sTitle, function (action) {
+        DataGrid.reload();
+        });
+        }
+
+        function doEdit(paramId) {
+        var sUrl = '@Url.Action("AddOrEdit")/' + paramId;
+        var sTitle = "编辑白名单用户";
+        var winParams = {};
+        mini.open({
+        url: sUrl,
+        title: sTitle, width: 600, height: 350,
+        ondestroy: function (action) {
+        DataGrid.reload();
+        }
+        });
+        }
+
+        function doSH(paramId) {
+        $$.message.confirm("是否审核当前行？", "提示", function (action) {
+        if (action == "ok") {
+        $$.ui.setBusy(null,
+        $$.ajax({
+        url: '@Url.Action("UpdateSh")/' + paramId,
+        type: 'GET'
+        }).done(function (data) {
+        if (data.Result == "1") {
+        $$.notify.success("审核成功！");
+        DataGrid.reload();
+        }
+        else
+        $$.notify.error("审核失败!");
+        })
+        .always(function () {
+        $$.ui.clearBusy(null);
+        })
+        )
+        }
+        });
+        }
+
+        function doDelete(paramId) {
+        $$.message.confirm("确定删除当前行？", "提示", function (action) {
+        if (action == "ok") {
+        $$.ui.setBusy(null,
+        $$.ajax({
+        url: '@Url.Action("Delete")/' + paramId,
+        type: 'GET'
+        }).done(function (data) {
+        if (data.Result == "1") {
+        $$.notify.success("删除成功！");
+        DataGrid.reload();
+        }
+        else
+        $$.notify.error("删除失败!");
+        })
+        .always(function () {
+        $$.ui.clearBusy(null);
+        })
+        )
+        }
+        });
+        }*@
+
+
+}
